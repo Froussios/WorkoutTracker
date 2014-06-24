@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using WorkoutTracker.Resources;
-using System.IO.IsolatedStorage;
-
-using System.Windows.Media;
 
 namespace WorkoutTracker
 {
@@ -66,6 +66,8 @@ namespace WorkoutTracker
         }
 
         static ViewModel Persistense = App.ViewModel;
+        ObservableCollection<Entry> justNowCollection = new ObservableCollection<Entry>();
+        public ObservableCollection<Entry> JustNowCollection { get { return justNowCollection; } }
 
         // Constructor
         public MainPage()
@@ -107,15 +109,17 @@ namespace WorkoutTracker
 
             if (count > 0)
             {
-                Persistense.AddEntry(new Entry
+                Entry newEntry = new Entry
                 { 
                     Count = count,
                     Activity = activity,
                     Date = DateTime.Now
-                });
+                };
+
+                Persistense.AddEntry(newEntry);
+                justNowCollection.Add(newEntry);
             }
         }
-
 
         
         private void PivotItem_Loaded(object sender, RoutedEventArgs e)
