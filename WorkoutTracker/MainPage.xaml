@@ -1,0 +1,147 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="WorkoutTracker.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sparrow="clr-namespace:Sparrow.Chart;assembly=Sparrow.Chart.WP8.45"
+    xmlns:wt="clr-namespace:WorkoutTracker"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="EntryTemplate">
+            <Grid Tap="EntryItem_Tap" Margin="30,10,30,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="{Binding PresentationDate}"></TextBlock>
+                    <TextBlock Text=": "></TextBlock>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="{Binding PresentationCount}" Foreground="{StaticResource PhoneAccentBrush}"></TextBlock>
+                <TextBlock Grid.Column="2" Text="{Binding PresentationActivity}"></TextBlock>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ActivityTemplate">
+            <Grid Tap="ActivityItem_Tap" Margin="30,10,30,10">
+                <TextBlock Text="{Binding Name}"></TextBlock>
+            </Grid>
+        </DataTemplate>
+        
+        <wt:Settings x:Key="Settings"></wt:Settings>
+        
+    </phone:PhoneApplicationPage.Resources>
+    
+    
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+
+        <!-- LOCALIZATION NOTE:
+            To localize the displayed strings copy their values to appropriately named
+            keys in the app's neutral language resource file (AppResources.resx) then
+            replace the hard-coded text value between the attributes' quotation marks
+            with the binding clause whose path points to that string name.
+
+            For example:
+
+                Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+
+            This binding points to the template's string resource named "ApplicationTitle".
+
+            Adding supported languages in the Project Properties tab will create a
+            new resx file per language that can carry the translated values of your
+            UI strings. The binding in these examples will cause the value of the
+            attributes to be drawn from the .resx file that matches the
+            CurrentUICulture of the app at run time.
+         -->
+    
+        <Popup x:Name="Popup">
+            <Grid Width="{Binding ActualWidth, ElementName=LayoutRoot, Mode=OneWay}"  Background="{StaticResource PhoneChromeBrush}" >
+                <StackPanel Margin="20">
+                    <TextBlock x:Name="PopupMessage">Hello!</TextBlock>
+                    <Button Content="Hide" Tap="Button_Tap"></Button>
+                </StackPanel>
+            </Grid>
+        </Popup>
+        
+        <!--Pivot Control-->
+        <phone:Pivot Title="WORKOUT TRACKER">
+            <phone:PivotItem Header="New">
+                <Grid>
+                    <Grid Height="100" HorizontalAlignment="Center" Margin="140,10,140,493">
+                        <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Center">I just did</TextBlock>
+                        <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="100" Margin="76,10,0,10" VerticalAlignment="Center" InputScope="Number"></TextBox>
+                    </Grid>
+                    <StackPanel x:Name="ActivitySelectorPanel" Margin="0,110,0,0">
+
+                    </StackPanel>
+                </Grid>
+            </phone:PivotItem>
+            <phone:PivotItem Header="Entries">
+                <ScrollViewer>
+                    <StackPanel>
+                        <ItemsControl x:Name="HistoryEntriesList"  ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding AllEntries}"></ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </phone:PivotItem>
+            <phone:PivotItem Header="Activities">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="NewActivityNameTextBox"  Grid.Column="0" ></TextBox>
+                        <Button x:Name="AddNewActivityButton" Grid.Column="1" Click="AddNewActivityButton_Click" >Add</Button>
+                    </Grid>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <!--<TextBlock Text="{Binding AllActivities[0].Count.ToString}"/>-->
+                            <ItemsControl x:Name="ActivitiesList" ItemTemplate="{StaticResource ActivityTemplate}" ItemsSource="{Binding AllActivities}"></ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+            </phone:PivotItem>
+            <phone:PivotItem Header="Graphs" Loaded="PivotItem_Loaded">
+                <Grid>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Button Click="Button_Click">Draw Graphs</Button>
+                            <StackPanel x:Name="ChartStackPanel">
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </phone:PivotItem>
+            <phone:PivotItem Header="Settings">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center">Session interval: </TextBlock>
+                        <TextBox Text="{Binding SessionInterval, Mode=TwoWay, Source={StaticResource Settings}}" InputScope="Number" Width="110"></TextBox>
+                        <TextBlock VerticalAlignment="Center">mins</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </phone:PivotItem>
+        </phone:Pivot>
+
+        <!--Uncomment to see an alignment grid to help ensure your controls are
+            aligned on common boundaries.  The image has a top margin of -32px to
+            account for the System Tray. Set this to 0 (or remove the margin altogether)
+            if the System Tray is hidden.
+
+            Before shipping remove this XAML and the image itself.-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" IsHitTestVisible="False" />-->
+    </Grid>
+
+</phone:PhoneApplicationPage>

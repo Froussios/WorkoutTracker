@@ -1,0 +1,94 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="phoneApplicationPage"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    x:Class="WorkoutTracker.EntryViewer"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="VisualStateGroup">
+				<VisualStateGroup.Transitions>
+					<VisualTransition GeneratedDuration="0" To="EntryDoesNotExist">
+						<Storyboard>
+							<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Popup.IsOpen)" Storyboard.TargetName="popup">
+								<DiscreteObjectKeyFrame KeyTime="0">
+									<DiscreteObjectKeyFrame.Value>
+										<System:Boolean>True</System:Boolean>
+									</DiscreteObjectKeyFrame.Value>
+								</DiscreteObjectKeyFrame>
+							</ObjectAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+								<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+								<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+							</DoubleAnimationUsingKeyFrames>
+						</Storyboard>
+					</VisualTransition>
+				</VisualStateGroup.Transitions>
+				<VisualState x:Name="Default"/>
+				<VisualState x:Name="EntryDoesNotExist">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Popup.IsOpen)" Storyboard.TargetName="popup">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<System:Boolean>True</System:Boolean>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>        
+        <Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+        <Popup x:Name="popup" Grid.Row="1">
+            <Grid x:Name="grid" Background="{StaticResource PhoneBackgroundBrush}" Height="{Binding ActualHeight, ElementName=ContentPanel}" Width="{Binding ActualWidth, ElementName=ContentPanel}" Margin="{Binding Margin, ElementName=ContentPanel}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Entry does not exist anymore" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}"/>
+            </Grid>
+        </Popup>
+
+        <!--TitlePanel contains the name of the application and page title-->
+		<StackPanel Grid.Row="0" Margin="12,17,0,28">
+			<TextBlock Text="WORKOUT TRACKER" Style="{StaticResource PhoneTextNormalStyle}"/>
+			<TextBlock Text="Entry" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+		</StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+			<ScrollViewer>
+				<StackPanel x:Name="stackPanel" RenderTransformOrigin="0.5,0.5">
+					<StackPanel.RenderTransform>
+						<CompositeTransform/>
+					</StackPanel.RenderTransform>
+					<TextBlock Text="Date" Style="{StaticResource PhoneTextTitle3Style}" Foreground="{StaticResource PhoneAccentBrush}"/>
+					<TextBlock Text="{Binding Date}" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"/>
+					<TextBlock Text="Activity type" Style="{StaticResource PhoneTextTitle3Style}"/>
+					<TextBlock Text="{Binding PresentationActivity}" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"/>
+					<TextBlock Text="Amount" Style="{StaticResource PhoneTextTitle3Style}"/>
+					<TextBlock Text="{Binding PresentationCount}" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"/>
+                    <toolkit:DatePicker Value="{Binding Date, Mode=TwoWay}"></toolkit:DatePicker>
+					<TextBlock/>
+
+					<Button Click="Button_Click" Content="Delete! Arghhh"/>
+				</StackPanel>
+			</ScrollViewer>
+		</Grid>
+	</Grid>
+
+</phone:PhoneApplicationPage>
