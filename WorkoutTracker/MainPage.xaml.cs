@@ -135,71 +135,100 @@ namespace WorkoutTracker
             public static string DailySessions = "DailySessions";
             public static string DailySessionMax = "DailySessionMax";
         };
+
         private void CreateGraphs()
         {
             ChartStackPanel.Children.Clear();
-
-            // Create graphs for every activity
-            foreach (Activity activity in App.ViewModel.AllActivities)
+            ChartStackPanel.Children.Add(new TextBlock() 
             {
-                // Analyse entries
-                IEnumerable<Entry> entries = App.ViewModel.GetEntries(activity);
-                Dictionary<string, Dictionary<int, int>> data;
+                Text = "Crunching numbers...",
+                Margin = new Thickness(0, 40, 0, 0),
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+            });
 
-                data = AnalyseData(entries);
+            Dispatcher.BeginInvoke(new Action(() => 
+            {
+                List<UIElement> graphs = new List<UIElement>();
 
-
-                // Presentation
-                StackPanel sp = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center };
-
-                // Title
-                TextBlock tb = new TextBlock { Text = activity.Name };
-                sp.Children.Add(tb);
-
-                // Graph displaying total count
-                System.Windows.Media.Brush areaFillBrush = Resources["PhoneAccentBrush"] as System.Windows.Media.Brush;
-                areaFillBrush.Opacity = 0.55;
-                Sparrow.Chart.SeriesBase aseries = new Sparrow.Chart.AreaSeries { Stroke = areaFillBrush, Fill = areaFillBrush };
-                Sparrow.Chart.LineSeries lseries = new Sparrow.Chart.LineSeries { StrokeThickness = 3, Stroke = Resources["PhoneAccentBrush"] as System.Windows.Media.Brush };
-                foreach (KeyValuePair<int, int> kv in data[GraphData.DailyTotal])
+                // Create graphs for every activity
+                foreach (Activity activity in App.ViewModel.AllActivities)
                 {
-                    Sparrow.Chart.ChartPoint point = new Sparrow.Chart.DoublePoint { Data = kv.Key, Value = kv.Value };
-                    aseries.Points.Add(point);
-                    lseries.Points.Add(point);
+                    // Analyse entries
+                    IEnumerable<Entry> entries = App.ViewModel.GetEntries(activity);
+                    Dictionary<string, Dictionary<int, int>> data;
+
+                    data = AnalyseData(entries);
+
+
+                    // Presentation
+                    StackPanel sp = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center };
+
+                    // Title
+                    TextBlock tb = new TextBlock { Text = activity.Name };
+                    sp.Children.Add(tb);
+
+                    // Graph displaying total count
+                    System.Windows.Media.Brush areaFillBrush = Resources["PhoneAccentBrush"] as System.Windows.Media.Brush;
+                    areaFillBrush.Opacity = 0.55;
+                    Sparrow.Chart.SeriesBase aseries = new Sparrow.Chart.AreaSeries { Stroke = areaFillBrush, Fill = areaFillBrush };
+                    Sparrow.Chart.LineSeries lseries = new Sparrow.Chart.LineSeries 
+                    {
+                        StrokeThickness = 3, Stroke = Resources["PhoneAccentBrush"] as System.Windows.Media.Brush 
+                    };
+                    foreach (KeyValuePair<int, int> kv in data[GraphData.DailyTotal])
+                    {
+                        Sparrow.Chart.ChartPoint point = new Sparrow.Chart.DoublePoint { Data = kv.Key, Value = kv.Value };
+                        aseries.Points.Add(point);
+                        lseries.Points.Add(point);
+                    }
+                    // Graph displaying average set
+                    Sparrow.Chart.SplineSeries sseries = new Sparrow.Chart.SplineSeries 
+                    {
+                        Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Orange) 
+                    };
+                    foreach (KeyValuePair<int, int> kv in data[GraphData.DailyTimes])
+                    {
+                        int t = data[GraphData.DailyTotal][kv.Key];
+                        int c = kv.Value;
+                        int value = (c > 0) ? t / c : 0;
+                        Sparrow.Chart.ChartPoint point = new Sparrow.Chart.DoublePoint { Data = kv.Key, Value = value };
+                        sseries.Points.Add(point);
+                    }
+                    // Graph display max session
+                    Sparrow.Chart.SplineSeries maxSessionSeries = new Sparrow.Chart.SplineSeries 
+                    {
+                        Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Magenta) 
+                    };
+                    foreach (KeyValuePair<int, int> kv in data[GraphData.DailySessionMax])
+                    {
+                        Sparrow.Chart.ChartPoint point = new Sparrow.Chart.DoublePoint { Data = kv.Key, Value = kv.Value };
+                        maxSessionSeries.Points.Add(point);
+                    }
+
+                    // The chart that all the graphs appear in
+                    Sparrow.Chart.SparrowChart chart = new Sparrow.Chart.SparrowChart
+                    {
+                        Height = 200,
+                        XAxis = new Sparrow.Chart.LinearXAxis { Interval = 7 },
+                        YAxis = new Sparrow.Chart.LinearYAxis { Interval = 10 }
+                    };
+                    chart.Series.Add(aseries);
+                    chart.Series.Add(lseries);
+                    chart.Series.Add(sseries);
+                    chart.Series.Add(maxSessionSeries);
+                    sp.Children.Add(chart);
+
+                    graphs.Add(sp);
                 }
-                // Graph displaying average set
-                Sparrow.Chart.SplineSeries sseries = new Sparrow.Chart.SplineSeries { Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Orange) };
-                foreach (KeyValuePair<int, int> kv in data[GraphData.DailyTimes])
-                {
-                    int t = data[GraphData.DailyTotal][kv.Key];
-                    int c = kv.Value;
-                    int value = (c > 0) ? t / c : 0;
-                    Sparrow.Chart.ChartPoint point = new Sparrow.Chart.DoublePoint { Data = kv.Key, Value = value };
-                    sseries.Points.Add(point);
-                }
-                // Graph display max session
-                Sparrow.Chart.SplineSeries maxSessionSeries = new Sparrow.Chart.SplineSeries { Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Magenta) };
-                foreach (KeyValuePair<int, int> kv in data[GraphData.DailySessionMax])
-                {
-                    Sparrow.Chart.ChartPoint point = new Sparrow.Chart.DoublePoint { Data = kv.Key, Value = kv.Value };
-                    maxSessionSeries.Points.Add(point);
-                }
 
-                // The chart that all the graphs appear in
-                Sparrow.Chart.SparrowChart chart = new Sparrow.Chart.SparrowChart
+                // Show graphs
+                ChartStackPanel.Children.Clear();
+                foreach (UIElement graph in graphs) 
                 {
-                    Height = 200,
-                    XAxis = new Sparrow.Chart.LinearXAxis { Interval = 7 },
-                    YAxis = new Sparrow.Chart.LinearYAxis { Interval = 10 }
-                };
-                chart.Series.Add(aseries);
-                chart.Series.Add(lseries);
-                chart.Series.Add(sseries);
-                chart.Series.Add(maxSessionSeries);
-                sp.Children.Add(chart);
-
-                ChartStackPanel.Children.Add(sp);
-            }
+                    ChartStackPanel.Children.Add(graph);
+                }
+            }));
+            
         }
 
 
