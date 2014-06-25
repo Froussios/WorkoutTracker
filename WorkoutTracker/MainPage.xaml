@@ -40,12 +40,12 @@
                 <TextBlock Text="{Binding Name}"></TextBlock>
             </Grid>
         </DataTemplate>
-        
+
         <wt:Settings x:Key="Settings"></wt:Settings>
-        
+
     </phone:PhoneApplicationPage.Resources>
-    
-    
+
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
@@ -67,7 +67,7 @@
             attributes to be drawn from the .resx file that matches the
             CurrentUICulture of the app at run time.
          -->
-    
+
         <Popup x:Name="Popup">
             <Grid Width="{Binding ActualWidth, ElementName=LayoutRoot, Mode=OneWay}"  Background="{StaticResource PhoneChromeBrush}" >
                 <StackPanel Margin="20">
@@ -76,26 +76,37 @@
                 </StackPanel>
             </Grid>
         </Popup>
-        
+
         <!--Pivot Control-->
         <phone:Pivot Title="WORKOUT TRACKER">
-            
+
             <phone:PivotItem Header="New">
-                <StackPanel>
-                    <Grid Height="100" HorizontalAlignment="Center" Margin="140,10,140,10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="Auto" MaxHeight="400"/>
+                        <RowDefinition Height="475*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Height="100" HorizontalAlignment="Center" Grid.Row="0">
                         <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Center">I just did</TextBlock>
                         <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="100" Margin="76,10,0,10" VerticalAlignment="Center" InputScope="Number"></TextBox>
                     </Grid>
-                    <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0"/>
-                    <TextBlock Margin="0,10,0,10" FontSize="24" HorizontalAlignment="Center">Today</TextBlock>
-                    <ScrollViewer VerticalAlignment="Bottom">
-                        <StackPanel x:Name="JustNowContainer">
-                            <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding EntriesToday}"></ItemsControl>
-                        </StackPanel>
-                    </ScrollViewer>
-                </StackPanel>
+                    <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0" Grid.Row="1"/>
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="100*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="24" HorizontalAlignment="Center" Grid.Row="0">Today</TextBlock>
+                        <ScrollViewer Grid.Row="1">
+                            <StackPanel x:Name="JustNowContainer">
+                                <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding EntriesToday}"></ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
             </phone:PivotItem>
-            
+
             <phone:PivotItem Header="Entries">
                 <ScrollViewer>
                     <StackPanel>
@@ -103,7 +114,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </phone:PivotItem>
-            
+
             <phone:PivotItem Header="Activities">
                 <StackPanel>
                     <Grid>
@@ -122,7 +133,7 @@
                     </ScrollViewer>
                 </StackPanel>
             </phone:PivotItem>
-            
+
             <phone:PivotItem Header="Graphs" Loaded="PivotItem_Loaded">
                 <Grid>
                     <ScrollViewer>
@@ -134,17 +145,17 @@
                     </ScrollViewer>
                 </Grid>
             </phone:PivotItem>
-            
+
             <phone:PivotItem Header="Settings">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center">Session interval: </TextBlock>
+                        <TextBlock VerticalAlignment="Center">Session interval:</TextBlock>
                         <TextBox Text="{Binding SessionInterval, Mode=TwoWay, Source={StaticResource Settings}}" InputScope="Number" Width="110"></TextBox>
                         <TextBlock VerticalAlignment="Center">mins</TextBlock>
                     </StackPanel>
                 </StackPanel>
             </phone:PivotItem>
-            
+
         </phone:Pivot>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
