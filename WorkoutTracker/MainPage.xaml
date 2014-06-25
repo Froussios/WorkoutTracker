@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sparrow="clr-namespace:Sparrow.Chart;assembly=Sparrow.Chart.WP8.45"
     xmlns:wt="clr-namespace:WorkoutTracker"
+    xmlns:wptk="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -78,6 +79,7 @@
         
         <!--Pivot Control-->
         <phone:Pivot Title="WORKOUT TRACKER">
+            
             <phone:PivotItem Header="New">
                 <StackPanel>
                     <Grid Height="100" HorizontalAlignment="Center" Margin="140,10,140,10">
@@ -91,6 +93,7 @@
                     </StackPanel>
                 </StackPanel>
             </phone:PivotItem>
+            
             <phone:PivotItem Header="Entries">
                 <ScrollViewer>
                     <StackPanel>
@@ -98,6 +101,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </phone:PivotItem>
+            
             <phone:PivotItem Header="Activities">
                 <StackPanel>
                     <Grid>
@@ -116,6 +120,7 @@
                     </ScrollViewer>
                 </StackPanel>
             </phone:PivotItem>
+            
             <phone:PivotItem Header="Graphs" Loaded="PivotItem_Loaded">
                 <Grid>
                     <ScrollViewer>
@@ -127,6 +132,7 @@
                     </ScrollViewer>
                 </Grid>
             </phone:PivotItem>
+            
             <phone:PivotItem Header="Settings">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
@@ -136,6 +142,7 @@
                     </StackPanel>
                 </StackPanel>
             </phone:PivotItem>
+            
         </phone:Pivot>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
