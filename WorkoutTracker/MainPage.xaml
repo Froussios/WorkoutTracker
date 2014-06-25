@@ -88,16 +88,16 @@
                         <RowDefinition Height="475*"/>
                     </Grid.RowDefinitions>
                     <Grid Height="100" HorizontalAlignment="Center" Grid.Row="0">
-                        <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Center">I just did</TextBlock>
-                        <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="100" Margin="76,10,0,10" VerticalAlignment="Center" InputScope="Number"></TextBox>
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22">I just did</TextBlock>
+                        <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="130" Margin="76,10,0,10" VerticalAlignment="Center" InputScope="Number"></TextBox>
                     </Grid>
                     <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0" Grid.Row="1"/>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="2" Margin="0,20,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="100*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock FontSize="24" HorizontalAlignment="Center" Grid.Row="0">Today</TextBlock>
+                        <TextBlock FontSize="28" HorizontalAlignment="Center" Grid.Row="0">Today</TextBlock>
                         <ScrollViewer Grid.Row="1">
                             <StackPanel x:Name="JustNowContainer">
                                 <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding EntriesToday}"></ItemsControl>
