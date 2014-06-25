@@ -14,6 +14,9 @@ using WorkoutTracker.Resources;
 
 namespace WorkoutTracker
 {
+    /// <summary>
+    /// Accessor to application settings
+    /// </summary>
     public class Settings
     {
         public static Settings Singleton = new Settings();
@@ -36,6 +39,10 @@ namespace WorkoutTracker
         }
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class MainPage : PhoneApplicationPage
     {
         class SelectActivityButton : Button
@@ -69,16 +76,16 @@ namespace WorkoutTracker
         ObservableCollection<Entry> justNowCollection = new ObservableCollection<Entry>();
         public ObservableCollection<Entry> JustNowCollection { get { return justNowCollection; } }
 
-        // Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
         public MainPage()
         {
             InitializeComponent();
 
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
-
-            //ActivitiesList.ItemsSource = Persistense.AllActivities;
-            //HistoryEntriesList.ItemsSource = Persistense.AllEntries;
 
             foreach (Activity activity in Persistense.AllActivities)
             {
@@ -89,7 +96,11 @@ namespace WorkoutTracker
             //BuildLocalizedApplicationBar();
         }
 
-        // Load data for the ViewModel Items
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!App.ViewModel.IsDataLoaded)
@@ -98,6 +109,12 @@ namespace WorkoutTracker
             }
         }
 
+
+        /// <summary>
+        /// Add a new entry.
+        /// Will read the amount for this entry from the GUI.
+        /// </summary>
+        /// <param name="activity">The activity type of the entry</param>
         public void AddEntry(Activity activity)
         {
             int count;
@@ -122,6 +139,11 @@ namespace WorkoutTracker
         }
 
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PivotItem_Loaded(object sender, RoutedEventArgs e)
         {
             //CreateGraphs();
@@ -136,6 +158,10 @@ namespace WorkoutTracker
             public static string DailySessionMax = "DailySessionMax";
         };
 
+
+        /// <summary>
+        /// Calculate and draw graphs for the last month
+        /// </summary>
         private void CreateGraphs()
         {
             ChartStackPanel.Children.Clear();
@@ -232,7 +258,11 @@ namespace WorkoutTracker
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entries"></param>
+        /// <returns></returns>
         private static Dictionary<string, Dictionary<int, int>> AnalyseData(IEnumerable<Entry> entries)
         {
             Dictionary<string, Dictionary<int, int>> data;
@@ -318,7 +348,11 @@ namespace WorkoutTracker
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ActivityItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Grid senderGrid = sender as Grid;
@@ -335,7 +369,11 @@ namespace WorkoutTracker
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EntryItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Grid senderGrid = sender as Grid;
@@ -351,16 +389,34 @@ namespace WorkoutTracker
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Popup.IsOpen = false;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CreateGraphs();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddNewActivityButton_Click(object sender, RoutedEventArgs e)
         {
             String name = NewActivityNameTextBox.Text;
