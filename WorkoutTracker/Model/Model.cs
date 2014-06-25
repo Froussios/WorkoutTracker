@@ -11,6 +11,9 @@ using System.Collections.ObjectModel;
 
 namespace WorkoutTracker
 {
+    /// <summary>
+    /// Data context
+    /// </summary>
     public class WorkoutTrackerDataContext : DataContext
     {
         // Pass the connection string to the base class.
@@ -28,6 +31,11 @@ namespace WorkoutTracker
         public Table<Activity> Activities;
     }
 
+
+    /// <summary>
+    /// Represents a set of an activity,
+    /// e.g. "20 pushups"
+    /// </summary>
     [Table]
     public class Entry : INotifyPropertyChanged, INotifyPropertyChanging
     {
@@ -124,10 +132,7 @@ namespace WorkoutTracker
 
         public String PresentationAll
         {
-            get
-            {
-                return PresentationDate + ": " + PresentationCount + " " + PresentationActivity;
-            }
+            get { return PresentationDate + ": " + PresentationCount + " " + PresentationActivity; }
         }
         public String PresentationDate
         {
@@ -179,6 +184,11 @@ namespace WorkoutTracker
         #endregion
     }
 
+
+    /// <summary>
+    /// A workout activity, which is part of workout program,
+    /// e.g. pushups, pullups, etc.
+    /// </summary>
     [Table]
     public class Activity : INotifyPropertyChanged, INotifyPropertyChanging
     {
