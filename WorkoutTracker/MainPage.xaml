@@ -87,17 +87,19 @@
                         <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="100" Margin="76,10,0,10" VerticalAlignment="Center" InputScope="Number"></TextBox>
                     </Grid>
                     <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0"/>
-                    <TextBlock Margin="20,10,0,0">Just now</TextBlock>
-                    <StackPanel x:Name="JustNowContainer" DataContext="{Binding ElementName=Page}">
-                        <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding JustNowCollection}"></ItemsControl>
-                    </StackPanel>
+                    <TextBlock Margin="0,10,0,10" FontSize="24" HorizontalAlignment="Center">Today</TextBlock>
+                    <ScrollViewer VerticalAlignment="Bottom">
+                        <StackPanel x:Name="JustNowContainer">
+                            <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding EntriesToday}"></ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
                 </StackPanel>
             </phone:PivotItem>
             
             <phone:PivotItem Header="Entries">
                 <ScrollViewer>
                     <StackPanel>
-                        <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding AllEntries}"></ItemsControl>
+                        <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding EntriesLastMonth}"></ItemsControl>
                     </StackPanel>
                 </ScrollViewer>
             </phone:PivotItem>

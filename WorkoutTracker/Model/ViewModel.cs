@@ -31,6 +31,20 @@ namespace WorkoutTracker
         }
 
 
+        private static class PropertyNames
+        {
+            public static String AllEntries = "AllEntries";
+            public static String AllActivities = "AllActivities";
+            public static String EntriesLastMonth = "EntriesLastMonth";
+            public static String EntriesToday = "EntriesToday";
+            
+        }
+        private Dictionary<String, ICollection<String>> viewAliases = new Dictionary<string, ICollection<String>>() 
+        {
+            {PropertyNames.AllEntries, new String[] {PropertyNames.EntriesLastMonth, PropertyNames.EntriesToday}}
+        };
+
+
         // LINQ to SQL data context for the local database.
         private WorkoutTrackerDataContext DB = null;
 
@@ -73,7 +87,39 @@ namespace WorkoutTracker
             set
             {
                 _allEntries = value;
-                NotifyPropertyChanged("AllEntries");
+                NotifyPropertyChanged(PropertyNames.AllEntries);
+            }
+        }
+
+
+        /// <summary>
+        /// Get a view of AllEntries that includes only views from the last 30 days
+        /// </summary>
+        public IEnumerable<Entry> EntriesLastMonth
+        {
+            get 
+            {
+                DateTime lastMonth = DateTime.Now.Subtract(new TimeSpan(30, 0, 0 ,0));
+                return AllEntries.TakeWhile((entry, index) => 
+                {
+                    return entry.Date.Ticks >= lastMonth.Ticks;
+                });
+            }
+        }
+
+
+        /// <summary>
+        /// Get a view of AllEntries that includes only views from the last day
+        /// </summary>
+        public IEnumerable<Entry> EntriesToday
+        {
+            get
+            {
+                DateTime lastMonth = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0));
+                return AllEntries.TakeWhile((entry, index) =>
+                {
+                    return entry.Date.Date.Ticks >= lastMonth.Ticks;
+                });
             }
         }
 
@@ -85,7 +131,7 @@ namespace WorkoutTracker
             set
             {
                 _allActivities = value;
-                NotifyPropertyChanged("AllActivities");
+                NotifyPropertyChanged(PropertyNames.AllActivities);
             }
         }
 
@@ -266,7 +312,7 @@ namespace WorkoutTracker
                 this.DataContext.SubmitChanges();
                 this.LoadActivities();
 
-                NotifyPropertyChanged("AllActivities");
+                NotifyPropertyChanged(PropertyNames.AllActivities);
             }
         }
 
@@ -297,6 +343,13 @@ namespace WorkoutTracker
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                
+                if (this.viewAliases.ContainsKey(propertyName))
+                    foreach (String propertyAlias in this.viewAliases[propertyName])
+                    {
+                        System.Console.WriteLine("{0} is alias for {1}", propertyAlias, propertyName);
+                        PropertyChanged(this, new PropertyChangedEventArgs(propertyAlias));
+                    }
             }
         }
         #endregion
