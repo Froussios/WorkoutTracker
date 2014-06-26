@@ -46,8 +46,6 @@
             </Grid>
         </DataTemplate>
 
-        <wt:Settings x:Key="Settings"></wt:Settings>
-
     </phone:PhoneApplicationPage.Resources>
 
 
@@ -153,16 +151,6 @@
                 </Grid>
             </phone:PivotItem>
 
-            <phone:PivotItem Header="Settings">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center">Session interval:</TextBlock>
-                        <TextBox Text="{Binding SessionInterval, Mode=TwoWay, Source={StaticResource Settings}}" InputScope="Number" Width="110"></TextBox>
-                        <TextBlock VerticalAlignment="Center">mins</TextBlock>
-                    </StackPanel>
-                </StackPanel>
-            </phone:PivotItem>
-
         </phone:Pivot>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
@@ -173,5 +161,14 @@
             Before shipping remove this XAML and the image itself.-->
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" IsHitTestVisible="False" />-->
     </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.settings.png" Text="Settings" Click="ApplicationBarSettings_Click"/>
+            <!--<shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Settings"/>
+            </shell:ApplicationBar.MenuItems>-->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

@@ -15,32 +15,6 @@ using WorkoutTracker.Resources;
 namespace WorkoutTracker
 {
     /// <summary>
-    /// Accessor to application settings
-    /// </summary>
-    public class Settings
-    {
-        public static Settings Singleton = new Settings();
-
-        private static class Keys
-        {
-            public static string SessionInterval = "SessionInterval";
-        }
-
-        public Settings()
-        {
-            if (!IsolatedStorageSettings.ApplicationSettings.Contains(Keys.SessionInterval))
-                IsolatedStorageSettings.ApplicationSettings[Keys.SessionInterval] = 20;
-        }
-
-        public int SessionInterval
-        {
-            get { return (int)IsolatedStorageSettings.ApplicationSettings[Keys.SessionInterval]; }
-            set { IsolatedStorageSettings.ApplicationSettings[Keys.SessionInterval] = value; }
-        }
-    }
-
-
-    /// <summary>
     /// 
     /// </summary>
     public partial class MainPage : PhoneApplicationPage
@@ -276,7 +250,7 @@ namespace WorkoutTracker
                 int day = -DateTime.Today.Subtract(group.Key.Date).Days;
 
                 // Find maximum session
-                int sessionIntervalMinutes = Settings.Singleton.SessionInterval;
+                int sessionIntervalMinutes = SettingsAccessor.Singleton.SessionInterval;
                 TimeSpan sessionInterval = new TimeSpan(0, sessionIntervalMinutes, 0);
                 int max = 0;
                 int currentSession = 0;
@@ -400,6 +374,11 @@ namespace WorkoutTracker
             {
                 App.ViewModel.AddActivity(new Activity { Name = name });
             }
+        }
+
+        private void ApplicationBarSettings_Click(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
         }
 
         // Sample code for building a localized ApplicationBar
