@@ -40,6 +40,11 @@
                 <TextBlock Text="{Binding Name}"></TextBlock>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="ActivitySelectorTemplate">
+            <Grid Margin="0,0,0,0">
+                <Button Content="{Binding Name}" Tap="SelectActivityButton_Tap"></Button>
+            </Grid>
+        </DataTemplate>
 
         <wt:Settings x:Key="Settings"></wt:Settings>
 
@@ -91,7 +96,9 @@
                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22">I just did</TextBlock>
                         <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="130" Margin="76,10,0,10" VerticalAlignment="Center" InputScope="Number"></TextBox>
                     </Grid>
-                    <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0" Grid.Row="1"/>
+                    <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0" Grid.Row="1">
+                        <ItemsControl ItemTemplate="{StaticResource ActivitySelectorTemplate}" ItemsSource="{Binding AllActivities}"></ItemsControl>
+                    </StackPanel>
                     <Grid Grid.Row="2" Margin="0,20,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>

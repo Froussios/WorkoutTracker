@@ -45,33 +45,6 @@ namespace WorkoutTracker
     /// </summary>
     public partial class MainPage : PhoneApplicationPage
     {
-        class SelectActivityButton : Button
-        {
-            public delegate void AddEntryDelegate(Activity activity);
-
-            AddEntryDelegate del;
-            private AddEntryDelegate AddEntryMethod
-            {
-                get { return del; }
-                set { del = value; }
-            }
-
-            Activity activity;
-
-            public SelectActivityButton(Activity inActivity, AddEntryDelegate addDel)
-            {
-                this.activity = inActivity;
-                this.Content = activity.Name;
-                this.AddEntryMethod = addDel;
-                this.Tap += SelectActivityButton_Tap;
-            }
-
-            void SelectActivityButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-            {
-                AddEntryMethod(activity);
-            }
-        }
-
         static ViewModel Persistense = App.ViewModel;
         ObservableCollection<Entry> justNowCollection = new ObservableCollection<Entry>();
         public ObservableCollection<Entry> JustNowCollection { get { return justNowCollection; } }
@@ -86,11 +59,6 @@ namespace WorkoutTracker
 
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
-
-            foreach (Activity activity in Persistense.AllActivities)
-            {
-                ActivitySelectorPanel.Children.Add(new SelectActivityButton(activity, AddEntry));
-            }
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
@@ -136,6 +104,14 @@ namespace WorkoutTracker
                 Persistense.AddEntry(newEntry);
                 justNowCollection.Add(newEntry);
             }
+        }
+
+
+        void SelectActivityButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            Button button = sender as Button;
+            Activity activity = button.DataContext as Activity;
+            AddEntry(activity);
         }
 
         
