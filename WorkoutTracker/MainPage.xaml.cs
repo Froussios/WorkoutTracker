@@ -381,6 +381,16 @@ namespace WorkoutTracker
             this.NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
         }
 
+        private void AmountOperation_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            Button button = sender as Button;
+            int amount = int.Parse(button.Content as String);
+            int current = 0;
+            int.TryParse(ActivityCount.Text, out current);
+
+            ActivityCount.Text = (current + amount).ToString();
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

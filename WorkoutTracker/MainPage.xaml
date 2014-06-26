@@ -83,17 +83,20 @@
         <!--Pivot Control-->
         <phone:Pivot Title="WORKOUT TRACKER">
 
-            <phone:PivotItem Header="New">
+            <phone:PivotItem Header="New" Margin="10,10,14,18">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="Auto" MaxHeight="400"/>
                         <RowDefinition Height="475*"/>
                     </Grid.RowDefinitions>
-                    <Grid Height="100" HorizontalAlignment="Center" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Height="100" HorizontalAlignment="Center" Grid.Row="0">
                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22">I just did</TextBlock>
-                        <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="130" Margin="76,10,0,10" VerticalAlignment="Center" InputScope="Number"></TextBox>
-                    </Grid>
+                        <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="130" VerticalAlignment="Center" InputScope="Number"></TextBox>
+                        <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">+10</Button>
+                        <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-5</Button>
+                        <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-1</Button>
+                    </StackPanel>
                     <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0" Grid.Row="1">
                         <ItemsControl ItemTemplate="{StaticResource ActivitySelectorTemplate}" ItemsSource="{Binding AllActivities}"></ItemsControl>
                     </StackPanel>
