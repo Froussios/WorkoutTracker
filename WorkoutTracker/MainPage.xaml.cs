@@ -81,6 +81,11 @@ namespace WorkoutTracker
         }
 
 
+        /// <summary>
+        /// Add a new entry. The amount is taken from the GUI
+        /// </summary>
+        /// <param name="sender">The UI element that contains the activity as its DataContext</param>
+        /// <param name="e"></param>
         void SelectActivityButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Button button = sender as Button;
@@ -100,6 +105,9 @@ namespace WorkoutTracker
         }
 
 
+        /// <summary>
+        /// Statically declared indexing keys
+        /// </summary>
         static class GraphData 
         {
             public static string DailyTotal = "DailyTotal"; 
@@ -376,11 +384,23 @@ namespace WorkoutTracker
             }
         }
 
+
+        /// <summary>
+        /// View settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ApplicationBarSettings_Click(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
         }
 
+
+        /// <summary>
+        /// Edit activity amount with shorthands
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AmountOperation_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Button button = sender as Button;
@@ -390,6 +410,7 @@ namespace WorkoutTracker
 
             ActivityCount.Text = (current + amount).ToString();
         }
+
 
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
