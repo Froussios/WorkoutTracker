@@ -40,8 +40,23 @@ namespace WorkoutTracker
             else
             {
                 popup.IsOpen = true;
+                VisualStateManager.GoToState(this, "EntryDoesNotExist", true);
             }
         }
+
+
+        public void SaveChanges()
+        {
+            App.ViewModel.SaveChangesToDB();
+        }
+
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            SaveChanges();
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -49,6 +64,19 @@ namespace WorkoutTracker
             //NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             VisualStateManager.GoToState(this, "EntryDoesNotExist", true);
             //popup.IsOpen = true;
+        }
+
+
+        private void ApplicationBarBack_Click(object sender, EventArgs e)
+        {
+            this.NavigationService.GoBack();
+        }
+
+
+        private void ApplicationBarSave_Click(object sender, EventArgs e)
+        {
+            this.SaveChanges();
+            this.NavigationService.GoBack();
         }
 
         
