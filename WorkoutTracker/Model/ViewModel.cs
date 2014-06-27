@@ -46,15 +46,15 @@ namespace WorkoutTracker
 
 
         // LINQ to SQL data context for the local database.
-        private WorkoutTrackerDataContext DB = null;
+        private WorkoutTrackerDataContext _DB = null;
 
         public WorkoutTrackerDataContext DataContext
         {
             get
             {
-                if (DB != null)
-                    return DB;
-                return DB = new WorkoutTrackerDataContext("isostore:/MyDatabase.sdf");
+                if (_DB != null)
+                    return _DB;
+                return _DB = new WorkoutTrackerDataContext("isostore:/MyDatabase.sdf");
             }
         }
 
@@ -100,10 +100,7 @@ namespace WorkoutTracker
             get 
             {
                 DateTime lastMonth = DateTime.Now.Subtract(new TimeSpan(30, 0, 0 ,0));
-                return AllEntries.TakeWhile((entry, index) => 
-                {
-                    return entry.Date.Ticks >= lastMonth.Ticks;
-                });
+                return AllEntries.Where(entry => entry.Date.Ticks >= lastMonth.Ticks);
             }
         }
 
@@ -115,11 +112,8 @@ namespace WorkoutTracker
         {
             get
             {
-                DateTime lastMonth = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0));
-                return AllEntries.TakeWhile((entry, index) =>
-                {
-                    return entry.Date.Date.Ticks >= lastMonth.Ticks;
-                });
+                DateTime today = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0));
+                return AllEntries.Where(entry => entry.Date.Date.Ticks >= today.Ticks);
             }
         }
 
@@ -142,7 +136,10 @@ namespace WorkoutTracker
         /// </summary>
         public void SaveChangesToDB()
         {
-            DB.SubmitChanges();
+            this.DataContext.SubmitChanges();
+
+            this.NotifyPropertyChanged("AllEntries");
+            this.NotifyPropertyChanged("AllActivities");
         }
 
 
@@ -169,7 +166,11 @@ namespace WorkoutTracker
         }
 
 
-
+        /// <summary>
+        /// Get all the entries to an activity
+        /// </summary>
+        /// <param name="activityName">The name of the activity</param>
+        /// <returns></returns>
         public IEnumerable<Entry> GetEntries(String activityName)
         {
             return from Entry entry in this.AllEntries
@@ -177,13 +178,18 @@ namespace WorkoutTracker
                            select entry;
         }
 
+
+        /// <summary>
+        /// Get all the entries to an activity
+        /// </summary>
+        /// <param name="activity">The activity</param>
+        /// <returns></returns>
         public IEnumerable<Entry> GetEntries(Activity activity)
         {
             return from Entry entry in this.AllEntries
                    where entry.Activity.Id == activity.Id
                    select entry;
         }
-
 
 
         /// <summary>
@@ -275,7 +281,6 @@ namespace WorkoutTracker
         public Activity GetOrCreateActivity(String name)
         {
             //Contract.Requires<ArgumentNullException>(name != null);
-            //Contract.Requires<ArgumentNullException>(category != null);
 
             var activities = from Activity activity in AllActivities
                              where activity.Name == name
@@ -335,6 +340,7 @@ namespace WorkoutTracker
 
         #region INotifyPropertyChanged Members
 
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Used to notify Silverlight that a property has changed.
@@ -347,11 +353,12 @@ namespace WorkoutTracker
                 if (this.viewAliases.ContainsKey(propertyName))
                     foreach (String propertyAlias in this.viewAliases[propertyName])
                     {
-                        System.Console.WriteLine("{0} is alias for {1}", propertyAlias, propertyName);
                         PropertyChanged(this, new PropertyChangedEventArgs(propertyAlias));
                     }
             }
         }
+
+
         #endregion
     }
 }
