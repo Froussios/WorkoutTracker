@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using System.ComponentModel;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using WorkoutTracker.Resources;
@@ -17,11 +18,26 @@ namespace WorkoutTracker
     /// <summary>
     /// 
     /// </summary>
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : PhoneApplicationPage, INotifyPropertyChanged
     {
         static ViewModel Persistense = App.ViewModel;
         ObservableCollection<Entry> justNowCollection = new ObservableCollection<Entry>();
         public ObservableCollection<Entry> JustNowCollection { get { return justNowCollection; } }
+
+
+        private UInt16 _activityAmount;
+        /// <summary>
+        /// The activity amount value from the form
+        /// </summary>
+        public UInt16 ActivityAmount
+        {
+            get { return _activityAmount; }
+            set
+            {
+                _activityAmount = value;
+                OnPropertyChanged("ActivityAmount");
+            }
+        }
 
 
         /// <summary>
@@ -62,7 +78,8 @@ namespace WorkoutTracker
             int count;
             try
             {
-                count = Int16.Parse(ActivityCount.Text);
+                //count = Int16.Parse(ActivityCount.Text);
+                count = ActivityAmount;
             }
             catch (Exception e) { return; }
 
@@ -405,11 +422,34 @@ namespace WorkoutTracker
         {
             Button button = sender as Button;
             int amount = int.Parse(button.Content as String);
-            int current = 0;
-            int.TryParse(ActivityCount.Text, out current);
+            int current = (int) ActivityAmount;
+            //int current = 0;
+            //int.TryParse(ActivityCount.Text, out current);
 
-            ActivityCount.Text = (current + amount).ToString();
+            //ActivityCount.Text = Math.Max(current + amount, 0).ToString();
+            ActivityAmount = (ushort) Math.Max(current + amount, 0);
         }
+
+
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Create the OnPropertyChanged method to raise the event 
+        /// </summary>
+        /// <param name="name"></param>
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        #endregion
 
 
         // Sample code for building a localized ApplicationBar

@@ -10,6 +10,7 @@
     xmlns:sparrow="clr-namespace:Sparrow.Chart;assembly=Sparrow.Chart.WP8.45"
     xmlns:wt="clr-namespace:WorkoutTracker"
     xmlns:wptk="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:data="System.Windows.Data"
     mc:Ignorable="d"
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -91,8 +92,8 @@
                         <RowDefinition Height="475*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Height="100" HorizontalAlignment="Center" Grid.Row="0">
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22">I just did</TextBlock>
-                        <TextBox x:Name="ActivityCount" Height="80" Text=""  HorizontalAlignment="Left" Width="130" VerticalAlignment="Center" InputScope="Number"></TextBox>
+                        <TextBlock VerticalAlignment="Center" FontSize="22">I just did</TextBlock>
+                        <TextBox x:Name="ActivityCount" Height="80" HorizontalAlignment="Left" Width="130" VerticalAlignment="Center" InputScope="Number" Text="{Binding ActivityAmount, ElementName=Page, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:D\}, TargetNullValue=0, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"></TextBox>
                         <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">+10</Button>
                         <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-5</Button>
                         <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-1</Button>
