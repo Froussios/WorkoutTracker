@@ -42,9 +42,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ActivitySelectorTemplate">
-            <Grid Margin="0,0,0,0">
-                <Button Content="{Binding Name}" Tap="SelectActivityButton_Tap"></Button>
-            </Grid>
+            <Button Content="{Binding Name}" Tap="SelectActivityButton_Tap" Width="auto"></Button>
         </DataTemplate>
 
     </phone:PhoneApplicationPage.Resources>
@@ -88,7 +86,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
-                        <RowDefinition Height="Auto" MaxHeight="400"/>
+                        <RowDefinition Height="Auto" MaxHeight="300"/>
                         <RowDefinition Height="475*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Height="100" HorizontalAlignment="Center" Grid.Row="0">
@@ -98,9 +96,18 @@
                         <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-5</Button>
                         <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-1</Button>
                     </StackPanel>
-                    <StackPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0" Grid.Row="1">
+                    <ScrollViewer Grid.Row="1">
+                        <ItemsControl Margin="0,0,0,0" ItemTemplate="{StaticResource ActivitySelectorTemplate}" ItemsSource="{Binding AllActivities}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <wptk:WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <!--<wptk:WrapPanel x:Name="ActivitySelectorPanel" Margin="0,0,0,0" Grid.Row="1" Height="300">
                         <ItemsControl ItemTemplate="{StaticResource ActivitySelectorTemplate}" ItemsSource="{Binding AllActivities}"></ItemsControl>
-                    </StackPanel>
+                    </wptk:WrapPanel>-->
                     <Grid Grid.Row="2" Margin="0,20,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
