@@ -78,8 +78,8 @@ namespace WorkoutTracker
             int count;
             try
             {
-                //count = Int16.Parse(ActivityCount.Text);
-                count = ActivityAmount;
+                count = Int16.Parse(ActivityCount.Text);
+                //count = ActivityAmount; // ActivityAmount gets updated after AddEntry is called
             }
             catch (Exception e) { return; }
 
