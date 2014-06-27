@@ -112,7 +112,7 @@ namespace WorkoutTracker
         {
             get
             {
-                DateTime today = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0));
+                DateTime today = DateTime.Now.Date.Subtract(new TimeSpan(12, 0, 0));
                 return AllEntries.Where(entry => entry.Date.Date.Ticks >= today.Ticks);
             }
         }
