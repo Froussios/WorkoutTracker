@@ -16,17 +16,26 @@ namespace WorkoutTracker
         {
             this.LoadData();
 
-            // Add dummies
-            if (this.GetActivity("Pushups") == null)
-            {
-                this.AddActivity(new Activity { Name = "Pushups" });
-                this.AddActivity(new Activity { Name = "Situps" });
+            //// Add dummies
+            //if (this.GetActivity("Pushups") == null)
+            //{
+            //    this.AddActivity(new Activity { Name = "Pushups" });
+            //    this.AddActivity(new Activity { Name = "Situps" });
 
-                Activity a = this.GetActivity("Pushups");
-                this.AddEntry(new Entry { Count = 20, Activity = a, Date = DateTime.Now });
-                this.AddEntry(new Entry { Count = 15, Activity = a, Date = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)) });
-                this.AddEntry(new Entry { Count = 15, Activity = a, Date = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)) });
-                this.AddEntry(new Entry { Count = 10, Activity = a, Date = DateTime.Now.Subtract(new TimeSpan(3, 0, 0, 0)) });
+            //    Activity a = this.GetActivity("Pushups");
+            //    this.AddEntry(new Entry { Count = 20, Activity = a, Date = DateTime.Now });
+            //    this.AddEntry(new Entry { Count = 15, Activity = a, Date = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)) });
+            //    this.AddEntry(new Entry { Count = 15, Activity = a, Date = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)) });
+            //    this.AddEntry(new Entry { Count = 10, Activity = a, Date = DateTime.Now.Subtract(new TimeSpan(3, 0, 0, 0)) });
+            //}
+
+            // Add welcome dummy
+            if (this._allActivities.Count == 0)
+            {
+                this.AddActivity(new Activity { Name = "Being Awesome"});
+
+                Activity awesome = this.GetActivity("Being Awesome");
+                this.AddEntry(new Entry { Count = 1, Activity = awesome, Date = DateTime.Now});
             }
         }
 
