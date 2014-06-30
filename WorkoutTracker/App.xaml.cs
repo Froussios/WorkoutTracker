@@ -7,7 +7,6 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using WorkoutTracker.Resources;
-using WorkoutTracker.ViewModels;
 
 using System.Windows.Media;
 using System.IO.IsolatedStorage;
@@ -28,7 +27,7 @@ namespace WorkoutTracker
             {
                 // Delay creation of the view model until necessary
                 if (viewModel == null)
-                    viewModel = new MainViewModel();
+                    viewModel = new ViewModel();
 
                 return viewModel;
             }
