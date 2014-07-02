@@ -151,7 +151,6 @@
             </phone:PivotItem>
 
             <phone:PivotItem Header="Graphs" Loaded="PivotItem_Loaded">
-                <Grid>
                     <ScrollViewer>
                         <StackPanel>
                             <Button Click="Button_Click">Draw Graphs</Button>
@@ -159,7 +158,6 @@
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
-                </Grid>
             </phone:PivotItem>
 
         </phone:Pivot>

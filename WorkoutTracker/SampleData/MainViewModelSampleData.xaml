@@ -1,7 +1,7 @@
-﻿<vm:MainViewModel
+﻿<vm:ViewModel
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:vm="clr-namespace:WorkoutTracker.ViewModels">
+    xmlns:vm="clr-namespace:WorkoutTracker">
     <!--SampleProperty="Sample Text Property Value">
 
     <vm:MainViewModel.Items>
@@ -13,4 +13,4 @@
         <vm:ItemViewModel LineOne="design six" LineTwo="Torquent ultrices vehicula volutpat" LineThree="Senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend"/>
     </vm:MainViewModel.Items>-->
 
-</vm:MainViewModel>
+</vm:ViewModel>

@@ -81,7 +81,7 @@ namespace WorkoutTracker
                 count = Int16.Parse(ActivityCount.Text);
                 //count = ActivityAmount; // ActivityAmount gets updated after AddEntry is called
             }
-            catch (Exception e) { return; }
+            catch (Exception) { return; }
 
             if (count > 0)
             {
@@ -183,7 +183,7 @@ namespace WorkoutTracker
                         lseries.Points.Add(point);
                     }
                     // Graph displaying average set
-                    Sparrow.Chart.SplineSeries sseries = new Sparrow.Chart.SplineSeries 
+                    Sparrow.Chart.SplineSeries seriesAverage = new Sparrow.Chart.SplineSeries 
                     {
                         Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Orange) 
                     };
@@ -193,7 +193,7 @@ namespace WorkoutTracker
                         int c = kv.Value;
                         int value = (c > 0) ? t / c : 0;
                         Sparrow.Chart.ChartPoint point = new Sparrow.Chart.DoublePoint { Data = kv.Key, Value = value };
-                        sseries.Points.Add(point);
+                        seriesAverage.Points.Add(point);
                     }
                     // Graph display max session
                     Sparrow.Chart.SplineSeries maxSessionSeries = new Sparrow.Chart.SplineSeries 
@@ -215,8 +215,8 @@ namespace WorkoutTracker
                     };
                     chart.Series.Add(aseries);
                     chart.Series.Add(lseries);
-                    chart.Series.Add(sseries);
-                    chart.Series.Add(maxSessionSeries);
+                    //chart.Series.Add(seriesAverage);
+                    //chart.Series.Add(maxSessionSeries);
                     sp.Children.Add(chart);
 
                     graphs.Add(sp);
@@ -230,6 +230,38 @@ namespace WorkoutTracker
                 }
             }));
             
+        }
+
+        private void createGraphs2()
+        {
+            ChartStackPanel.Children.Clear();
+
+            // Create graphs for every activity
+            foreach (Activity activity in App.ViewModel.AllActivities)
+            {
+                // Analyse entries
+                IEnumerable<Entry> entries = App.ViewModel.GetEntries(activity);
+                Dictionary<string, Dictionary<int, int>> data;
+                data = AnalyseData(entries);
+
+                // Presentation
+                StackPanel sp = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center };
+
+                // Title
+                TextBlock tb = new TextBlock { Text = activity.Name };
+                sp.Children.Add(tb);
+
+                // Graph displaying total count
+                List<double> list = new List<double>();
+                foreach (KeyValuePair<int, int> kv in data[GraphData.DailyTotal].OrderBy(x => x.Key))
+                {
+                    list.Add(kv.Value);
+                }
+                Statser statser = new Statser();
+                statser.Data = new ObservableCollection<Datum>(list.Select(x => new Datum(x)));
+                sp.Children.Add(statser);
+                ChartStackPanel.Children.Add(sp);
+            }
         }
 
 
@@ -383,7 +415,7 @@ namespace WorkoutTracker
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CreateGraphs();
+            createGraphs2();
         }
 
 

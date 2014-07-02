@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="WorkoutTracker.Statser"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    Height="100" Width="400">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ColumnTemplate">
+            <Rectangle Height="{Binding ProjectedValue}" Width="{Binding ProjectedValue2}" Fill="Lime" VerticalAlignment="Bottom"></Rectangle>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" >
+        <ItemsControl x:Name="ColumnContainer" ItemTemplate="{StaticResource ColumnTemplate}" ItemsSource="{Binding Data}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</UserControl>
