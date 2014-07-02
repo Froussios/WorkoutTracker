@@ -115,6 +115,7 @@ namespace WorkoutTracker
         }
 
 
+        private double[] snapIntervals = { 5, 20, 50, 100, 1000, 5000, 10000 };
         private double _interval = 20;
         public double Interval
         {
@@ -187,7 +188,7 @@ namespace WorkoutTracker
             get { return _maxValue; }
             protected set
             {
-                value = CeilToMultiple(value, Interval);
+                value = CeilToMultiple(value);
                 if (value != MaxValue)
                 {
                     this._maxValue = value;
@@ -264,6 +265,20 @@ namespace WorkoutTracker
                                  : new SolidColorBrush(Color.FromArgb(255, 50, 50, 50))
                 ));
             }
+        }
+
+
+        protected double CeilToMultiple(double maxValue)
+        {
+            double select = snapIntervals[0];
+            foreach (double interval in snapIntervals)
+            {
+                select = interval;
+                if (maxValue / interval < 6)
+                    break;
+            }
+            this.Interval = select;
+            return CeilToMultiple(maxValue, Interval);
         }
 
 
