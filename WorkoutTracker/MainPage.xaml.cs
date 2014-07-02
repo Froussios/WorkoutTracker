@@ -244,23 +244,19 @@ namespace WorkoutTracker
                 Dictionary<string, Dictionary<int, int>> data;
                 data = AnalyseData(entries);
 
-                // Presentation
-                StackPanel sp = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center };
-
-                // Title
-                TextBlock tb = new TextBlock { Text = activity.Name };
-                sp.Children.Add(tb);
-
                 // Graph displaying total count
                 List<double> list = new List<double>();
                 foreach (KeyValuePair<int, int> kv in data[GraphData.DailyTotal].OrderBy(x => x.Key))
                 {
                     list.Add(kv.Value);
                 }
-                Statser statser = new Statser();
-                statser.Data = new ObservableCollection<Datum>(list.Select(x => new Datum(x)));
-                sp.Children.Add(statser);
-                ChartStackPanel.Children.Add(sp);
+                Statser statser = new Statser()
+                {
+                    Title = activity.Name,
+                    Data = new ObservableCollection<Datum>(list.Select(x => new Datum(x))),
+                    Height=150,
+                };
+                ChartStackPanel.Children.Add(statser);
             }
         }
 
@@ -340,10 +336,10 @@ namespace WorkoutTracker
             }
 
             // Duplicate last entry for better visivility
-            total[1] = total[0];
-            entriesCount[1] = entriesCount[0];
-            sessionsCount[1] = sessionsCount[0];
-            sessionMax[1] = sessionMax[0];
+            //total[1] = total[0];
+            //entriesCount[1] = entriesCount[0];
+            //sessionsCount[1] = sessionsCount[0];
+            //sessionMax[1] = sessionMax[0];
 
             data = new Dictionary<string, Dictionary<int, int>>();
             data[GraphData.DailyTotal] = total;
