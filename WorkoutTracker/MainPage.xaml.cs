@@ -255,6 +255,7 @@ namespace WorkoutTracker
                     Title = activity.Name,
                     Data = new ObservableCollection<Datum>(list.Select(x => new Datum(x))),
                     Height=150,
+                    Margin = new Thickness(0, 20, 0, 0),
                 };
                 ChartStackPanel.Children.Add(statser);
             }
