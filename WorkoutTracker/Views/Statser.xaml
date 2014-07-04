@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:local="clr-namespace:WorkoutTracker.Views"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -34,30 +35,34 @@
             <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="100" x:Name="RowGridContainer" ItemTemplate="{StaticResource RowLine}" ItemsSource="{Binding RowGrid}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
 
-            <ItemsControl MinWidth="100" x:Name="RowGridContainer" ItemTemplate="{StaticResource RowLine}" ItemsSource="{Binding RowGrid}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-
-            <ItemsControl x:Name="ColumnContainer" ItemTemplate="{StaticResource ColumnTemplate}" ItemsSource="{Binding Data}" >
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-
-        </Grid>
+        <ItemsControl Grid.Row="1" Grid.Column="1" x:Name="ColumnContainer" ItemTemplate="{StaticResource ColumnTemplate}" ItemsSource="{Binding Data}" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
         
         <Border
             Grid.Row="0" Grid.RowSpan="2"
-            Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="{StaticResource PhoneAccentBrush}" CornerRadius="1" Margin="0,10,0,0"
-            />
+            Grid.Column="0" Grid.ColumnSpan="2" 
+            BorderThickness="1" 
+            BorderBrush="{StaticResource PhoneAccentBrush}" 
+            CornerRadius="1" 
+            Margin="0,10,0,0" 
+            >
+            <Border.Background>
+                <local:MixedColorBrush></local:MixedColorBrush>
+            </Border.Background>
+        </Border>
 
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Background="{StaticResource PhoneBackgroundBrush}">
             <TextBlock  Text="{Binding Title}" Margin="10,0"></TextBlock>
