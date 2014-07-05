@@ -12,7 +12,13 @@
     			<ResourceDictionary Source="WorkoutTrackerResources.xaml"/>
     		</ResourceDictionary.MergedDictionaries>
     		<local:LocalizedStrings xmlns:local="clr-namespace:WorkoutTracker" x:Key="LocalizedStrings"/>
-    	</ResourceDictionary>
+            
+            <Color x:Key="AppThemeDarkerColor">#FF880000</Color>
+            <Color x:Key="AppThemeBrightColor">#FFFF0000</Color>
+            
+            <SolidColorBrush x:Key="PhoneAccentDarkerBrush" Color="{StaticResource AppThemeDarkerColor}"/>
+            <SolidColorBrush x:Key="PhoneAccentBrightBrush" Color="{StaticResource AppThemeBrightColor}"/>
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>
