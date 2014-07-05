@@ -46,11 +46,19 @@ namespace WorkoutTracker
             public static String AllActivities = "AllActivities";
             public static String EntriesLastMonth = "EntriesLastMonth";
             public static String EntriesToday = "EntriesToday";
+            public static String EntriesBeforeToday = "EntriesBeforeToday";
             
         }
         private Dictionary<String, ICollection<String>> viewAliases = new Dictionary<string, ICollection<String>>() 
         {
-            {PropertyNames.AllEntries, new String[] {PropertyNames.EntriesLastMonth, PropertyNames.EntriesToday}}
+            {
+                PropertyNames.AllEntries, new String[] 
+                {
+                    PropertyNames.EntriesLastMonth,
+                    PropertyNames.EntriesToday,
+                    PropertyNames.EntriesBeforeToday,
+                }
+            }
         };
 
 
@@ -75,6 +83,7 @@ namespace WorkoutTracker
             private set;
         }
 
+
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
@@ -90,6 +99,9 @@ namespace WorkoutTracker
 
 
         private ObservableCollection<Entry> _allEntries;
+        /// <summary>
+        /// Get all the entries
+        /// </summary>
         public ObservableCollection<Entry> AllEntries
         {
             get { return _allEntries; }
@@ -108,7 +120,7 @@ namespace WorkoutTracker
         {
             get 
             {
-                DateTime lastMonth = DateTime.Now.Subtract(new TimeSpan(30, 0, 0 ,0));
+                DateTime lastMonth = DateTime.Now.Date.Subtract(new TimeSpan(30, 0, 0 ,0));
                 return AllEntries.Where(entry => entry.Date.Ticks >= lastMonth.Ticks);
             }
         }
@@ -127,7 +139,25 @@ namespace WorkoutTracker
         }
 
 
+        /// <summary>
+        /// Get last month's entries, excluding today
+        /// </summary>
+        public IEnumerable<Entry> EntriesBeforeToday
+        {
+            get
+            {
+                DateTime today = DateTime.Now.Date.Subtract(new TimeSpan(12, 0, 0));
+                DateTime lastMonth = DateTime.Now.Date.Subtract(new TimeSpan(30, 0, 0, 0));
+                return AllEntries.Where(entry => entry.Date.Date.Ticks <= today.Ticks &&
+                                                 entry.Date.Date.Ticks >= lastMonth.Ticks);
+            }
+        }
+
+
         private ObservableCollection<Activity> _allActivities;
+        /// <summary>
+        /// View of all the activities
+        /// </summary>
         public ObservableCollection<Activity> AllActivities
         {
             get { return _allActivities; }
@@ -137,7 +167,6 @@ namespace WorkoutTracker
                 NotifyPropertyChanged(PropertyNames.AllActivities);
             }
         }
-
 
 
         /// <summary>
@@ -350,6 +379,9 @@ namespace WorkoutTracker
         #region INotifyPropertyChanged Members
 
 
+        /// <summary>
+        /// Implementation of INotifyPropertyChanged 
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Used to notify Silverlight that a property has changed.
