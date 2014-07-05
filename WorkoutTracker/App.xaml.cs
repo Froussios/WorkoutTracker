@@ -75,7 +75,50 @@ namespace WorkoutTracker
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+
+            InitialiseTheme();
         }
+
+
+        // Set this app's theme colours
+        private void InitialiseTheme()
+        {
+            setAccent(Colors.Orange);
+
+            Color accent = (Color)Resources["PhoneAccentColor"];
+            Color darker = Colors.Black;
+            Color bright = Colors.White;
+
+            Color theme = accent;
+            Color themeBright = mix(theme, bright);
+            Color themeDarker = mix(theme, darker);
+
+            Resources.Remove("AppThemeDarkerColor");
+            Resources.Remove("AppThemeBrightColor");
+            Resources.Add("AppThemeDarkerColor", themeDarker);
+            Resources.Add("AppThemeBrightColor", themeBright);
+
+            (Resources["PhoneAccentDarkerBrush"] as SolidColorBrush).Color = themeDarker;
+            (Resources["PhoneAccentBrightBrush"] as SolidColorBrush).Color = themeBright;
+        }
+
+
+        private void setAccent(Color color)
+        {
+            Resources.Remove("PhoneAccentColor");
+            Resources.Add("PhoneAccentColor", color);
+            ((SolidColorBrush)Resources["PhoneAccentBrush"]).Color = color;
+        }
+
+
+        private Color mix(Color c1, Color c2)
+        {
+            return Color.FromArgb((byte)((c1.A + c2.A) / 2),
+                                  (byte)((c1.R + c2.R) / 2),
+                                  (byte)((c1.G + c2.G) / 2),
+                                  (byte)((c1.B + c2.B) / 2));
+        }
+
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
