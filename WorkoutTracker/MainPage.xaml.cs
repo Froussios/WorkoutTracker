@@ -389,7 +389,7 @@ namespace WorkoutTracker
             Activity activity = senderGrid.DataContext as Activity;
             if (activity != null)
             {
-                NavigationService.Navigate(new Uri("/ActivityViewer.xaml?activityId=" + activity.Id, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Views/ActivityViewer.xaml?activityId=" + activity.Id, UriKind.Relative));
             }
             else
             {
@@ -410,7 +410,7 @@ namespace WorkoutTracker
             Entry entry = senderGrid.DataContext as Entry;
             if (entry != null)
             {
-                NavigationService.Navigate(new Uri("/EntryViewer.xaml?entryId=" + entry.Id, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Views/EntryViewer.xaml?entryId=" + entry.Id, UriKind.Relative));
             }
             else
             {
@@ -464,7 +464,7 @@ namespace WorkoutTracker
         /// <param name="e"></param>
         private void ApplicationBarSettings_Click(object sender, EventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("/Views/Settings.xaml", UriKind.Relative));
         }
 
 
