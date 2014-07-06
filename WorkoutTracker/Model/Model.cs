@@ -57,49 +57,49 @@ namespace WorkoutTracker
         }
 
 
-        private int  count;
+        private int _count;
 
         [Column]
         public int Count
         {
-            get { return count; }
+            get { return _count; }
             set
             {
-                if (count != value)
+                if (_count != value)
                 {
                     NotifyPropertyChanging("Count");
-                    count = value;
+                    _count = value;
                     NotifyPropertyChanged("Count");
                 }
             }
         }
 
 
-        private long date;
+        private long _date;
         [Column]
         public long DateTicks
         {
-            get { return date; }
+            get { return _date; }
             set
             {
-                if (date != value)
+                if (_date != value)
                 {
                     NotifyPropertyChanging("Date");
-                    date = value;
+                    _date = value;
                     NotifyPropertyChanged("Date");
                 }
             }
         }
         public DateTime Date
         {
-            get { return new DateTime(date); }
+            get { return new DateTime(_date); }
             set
             {
                 long v = value.Ticks;
-                if (date != v)
+                if (_date != v)
                 {
                     NotifyPropertyChanging("Date");
-                    date = v;
+                    _date = v;
                     NotifyPropertyChanged("Date");
                 }
             }
@@ -200,39 +200,70 @@ namespace WorkoutTracker
     [Table]
     public class Activity : INotifyPropertyChanged, INotifyPropertyChanging
     {
-        private int id;
+        private int _id;
         [Column(IsPrimaryKey = true, IsDbGenerated = true, DbType = "INT NOT NULL Identity", CanBeNull = false, AutoSync = AutoSync.OnInsert)]
         public int Id
         {
-            get { return id; }
+            get { return _id; }
             set
             {
-                if (id != value)
+                if (_id != value)
                 {
                     NotifyPropertyChanging("Id");
-                    id = value;
+                    _id = value;
                     NotifyPropertyChanged("Id");
                 }
             }
         }
 
 
-        private string name;
+        private string _name;
         [Column]
         public string Name
         {
-            get { return name; }
+            get { return _name; }
             set
             {
-                if (name != value)
+                if (_name != value)
                 {
                     NotifyPropertyChanging("Name");
-                    name = value;
+                    _name = value;
                     NotifyPropertyChanged("Name");
                 }
             }
         }
 
+        private int _dailyGoal;
+        [Column]
+        public int DailyGoal
+        {
+            get { return _dailyGoal; }
+            set
+            {
+                if (_dailyGoal != value)
+                {
+                    NotifyPropertyChanging("DailyGoal");
+                    _dailyGoal = value;
+                    NotifyPropertyChanged("DailyGoal");
+                }
+            }
+        }
+
+        private int _weeklyGoal;
+        [Column]
+        public int WeeklyGoal
+        {
+            get { return _weeklyGoal; }
+            set
+            {
+                if (_weeklyGoal != value)
+                {
+                    NotifyPropertyChanging("WeeklyGoal");
+                    _weeklyGoal = value;
+                    NotifyPropertyChanged("WeeklyGoal");
+                }
+            }
+        }
 
         public override string ToString()
         {
