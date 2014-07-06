@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace WorkoutTracker
 {
@@ -20,7 +21,7 @@ namespace WorkoutTracker
         public static SettingsAccessor _singleton = new SettingsAccessor();
         public static SettingsAccessor Default
         {
-            get { return _singleton; }
+            get { return (SettingsAccessor) App.Current.Resources["Settings"]; }
         }
 
 
@@ -41,7 +42,12 @@ namespace WorkoutTracker
         public SettingsAccessor()
         {
             this.initialise(Keys.SessionInterval, 20);
-            this.initialise(Keys.AmountShorthands, new string[] { "+10", "-5", "-1" });
+            this.initialise(Keys.AmountShorthands, new ObservableCollection<AmountShorthand>(new AmountShorthand[] 
+            { 
+                new AmountShorthand{Amount="+10"},
+                new AmountShorthand{Amount="-5"},
+                new AmountShorthand{Amount="-1"},
+            }));
         }
 
 
@@ -74,9 +80,9 @@ namespace WorkoutTracker
         /// <summary>
         /// 
         /// </summary>
-        public ICollection<String> AmountShorthands
+        public ObservableCollection<AmountShorthand> AmountShorthands
         {
-            get { return (ICollection<String>)IsolatedStorageSettings.ApplicationSettings[Keys.AmountShorthands]; }
+            get { return (ObservableCollection<AmountShorthand>)IsolatedStorageSettings.ApplicationSettings[Keys.AmountShorthands]; }
             set 
             { 
                 IsolatedStorageSettings.ApplicationSettings[Keys.AmountShorthands] = value;
@@ -102,12 +108,55 @@ namespace WorkoutTracker
     }
 
 
+    public class AmountShorthand : INotifyPropertyChanged
+    {
+        private string _amount = "0";
+        public string Amount
+        {
+            get { return _amount; }
+            set
+            {
+                _amount = value;
+                NotifyPropertyChanged("Amount");
+            }
+        }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Used to notify that a property changed
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+    }
+
+
 
     public partial class Settings : PhoneApplicationPage
     {
         public Settings()
         {
             InitializeComponent();
+        }
+
+
+        private void TextBox_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            ObservableCollection<AmountShorthand> shorthands = new ObservableCollection<AmountShorthand>();
+            foreach (var item in ShorthandsControl.Items)
+            {
+                TextBox tb = (TextBox)ShorthandsControl.ItemContainerGenerator.ContainerFromItem(item);
+                shorthands.Add(new AmountShorthand { Amount = tb.Text });
+            }
+
+            SettingsAccessor.Default.AmountShorthands = shorthands;
         }
     }
 }

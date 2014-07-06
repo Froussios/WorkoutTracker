@@ -122,13 +122,10 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Margin="-15,0,0,0"  Content="{Binding}" Tap="AmountOperation_Tap" Height="{Binding Height, ElementName=ActivityCount}"></Button>
+                                    <Button Margin="-15,0,0,0"  Content="{Binding Amount}" Tap="AmountOperation_Tap" Height="{Binding Height, ElementName=ActivityCount}"></Button>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <!--<Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">+10</Button>
-                        <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-5</Button>
-                        <Button Margin="-15" Tap="AmountOperation_Tap" Height="{Binding ActualHeight, ElementName=ActivityCount, Mode=OneWay}">-1</Button>-->
                     </StackPanel>
                     <ScrollViewer Grid.Row="1">
                         <ItemsControl Margin="10,0,10,0" ItemTemplate="{StaticResource ActivitySelectorTemplate}" ItemsSource="{Binding AllActivities}">
