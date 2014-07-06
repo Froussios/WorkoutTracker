@@ -47,6 +47,7 @@ namespace WorkoutTracker
             public static String EntriesLastMonth = "EntriesLastMonth";
             public static String EntriesToday = "EntriesToday";
             public static String EntriesBeforeToday = "EntriesBeforeToday";
+            public static String TotalsToday = "TotalsToday";
             
         }
         private Dictionary<String, ICollection<String>> viewAliases = new Dictionary<string, ICollection<String>>() 
@@ -57,6 +58,7 @@ namespace WorkoutTracker
                     PropertyNames.EntriesLastMonth,
                     PropertyNames.EntriesToday,
                     PropertyNames.EntriesBeforeToday,
+                    PropertyNames.TotalsToday,
                 }
             }
         };
@@ -150,6 +152,22 @@ namespace WorkoutTracker
                 DateTime lastMonth = DateTime.Now.Date.Subtract(new TimeSpan(30, 0, 0, 0));
                 return AllEntries.Where(entry => entry.Date.Date.Ticks <= today.Ticks &&
                                                  entry.Date.Date.Ticks >= lastMonth.Ticks);
+            }
+        }
+
+
+        public IEnumerable<Tuple<Activity, int, int>> TotalsToday
+        {
+            get
+            {
+                return EntriesToday.GroupBy(x => x.Activity)
+                                   .Select(group => new Tuple<Activity, int, int>
+                                   (
+                                       group.Key,
+                                       group.Sum(entry => entry.Count),
+                                       group.Count()
+                                   ));
+
             }
         }
 
