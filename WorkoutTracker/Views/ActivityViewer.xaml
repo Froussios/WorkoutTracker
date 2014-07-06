@@ -64,11 +64,17 @@
                     <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
                     <TextBlock Text="Average Set" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
                     <TextBlock x:Name="AverageSetTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
-                    <TextBlock></TextBlock>
 
-                    <Button Click="Button_Click">Delete! Arghhh</Button>
+                    <TextBlock Text="Daily Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                    <TextBox Text="{Binding DailyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left"></TextBox>
+                    <TextBlock Text="Weekly Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                    <TextBox Text="{Binding WeeklyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left"></TextBox>
+                    
+                    <Rectangle Height="25"></Rectangle>
+
+                    <!--<Button Click="Delete_Click">Delete! Arghhh</Button>
                     <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap">Note: You can't delete if there are entries to this activity</TextBlock>
-                    <TextBlock></TextBlock>
+                    <TextBlock></TextBlock>-->
                     <TextBlock Style="{StaticResource PhoneTextTitle3Style}">Entries</TextBlock>
                     <StackPanel>
                         <ItemsControl x:Name="HistoryEntriesList"  ItemTemplate="{StaticResource EntryTemplate}"></ItemsControl>
@@ -77,5 +83,14 @@
             </ScrollViewer>
         </Grid>
     </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Delete.png" Text="Delete" Click="Delete_Click"/>
+            <!--<shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Settings"/>
+            </shell:ApplicationBar.MenuItems>-->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

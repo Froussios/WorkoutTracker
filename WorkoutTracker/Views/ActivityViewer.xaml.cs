@@ -36,7 +36,7 @@ namespace WorkoutTracker
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Delete_Click(object sender, EventArgs e)
         {
             Activity activity = DataContext as Activity;
             if (App.ViewModel.GetEntries(activity).Count(x => true) > 0)
@@ -62,13 +62,25 @@ namespace WorkoutTracker
             Entry entry = senderGrid.DataContext as Entry;
             if (entry != null)
             {
-                NavigationService.Navigate(new Uri("/EntryViewer.xaml?entryId=" + entry.Id, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Views/EntryViewer.xaml?entryId=" + entry.Id, UriKind.Relative));
             }
             else
             {
                 PopupMessage.Text = "null entry :(";
                 Popup.IsOpen = true;
             }
+        }
+
+        public void SaveChanges()
+        {
+            App.ViewModel.SaveChangesToDB();
+        }
+
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            SaveChanges();
         }
     }
 }
