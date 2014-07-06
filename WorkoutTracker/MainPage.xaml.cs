@@ -24,6 +24,11 @@ namespace WorkoutTracker
         ObservableCollection<Entry> justNowCollection = new ObservableCollection<Entry>();
         public ObservableCollection<Entry> JustNowCollection { get { return justNowCollection; } }
 
+        public SettingsAccessor Settings
+        {
+            get { return SettingsAccessor.Default; }
+        }
+
 
         private UInt16 _activityAmount;
         /// <summary>
@@ -325,7 +330,7 @@ namespace WorkoutTracker
                 int day = -DateTime.Today.Subtract(group.Key.Date).Days;
 
                 // Find maximum session
-                int sessionIntervalMinutes = SettingsAccessor.Singleton.SessionInterval;
+                int sessionIntervalMinutes = SettingsAccessor.Default.SessionInterval;
                 TimeSpan sessionInterval = new TimeSpan(0, sessionIntervalMinutes, 0);
                 int max = 0;
                 int currentSession = 0;

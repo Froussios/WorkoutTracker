@@ -8,15 +8,20 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
+using System.ComponentModel;
 
 namespace WorkoutTracker
 {
     /// <summary>
     /// Accessor to application settings
     /// </summary>
-    public class SettingsAccessor
-    {
-        public static SettingsAccessor Singleton = new SettingsAccessor();
+    public class SettingsAccessor : INotifyPropertyChanged
+    { 
+        public static SettingsAccessor _singleton = new SettingsAccessor();
+        public static SettingsAccessor Default
+        {
+            get { return _singleton; }
+        }
 
 
         /// <summary>
@@ -36,7 +41,7 @@ namespace WorkoutTracker
         public SettingsAccessor()
         {
             this.initialise(Keys.SessionInterval, 20);
-            this.initialise(Keys.AmountShorthands, new int[] { 10, -5, -1 });
+            this.initialise(Keys.AmountShorthands, new string[] { "+10", "-5", "-1" });
         }
 
 
@@ -58,18 +63,42 @@ namespace WorkoutTracker
         public int SessionInterval
         {
             get { return (int)IsolatedStorageSettings.ApplicationSettings[Keys.SessionInterval]; }
-            set { IsolatedStorageSettings.ApplicationSettings[Keys.SessionInterval] = value; }
+            set 
+            { 
+                IsolatedStorageSettings.ApplicationSettings[Keys.SessionInterval] = value;
+                this.NotifyPropertyChanged("SessionInterval");
+            }
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public ICollection<int> AmountShorthands
+        public ICollection<String> AmountShorthands
         {
-            get { return (ICollection<int>)IsolatedStorageSettings.ApplicationSettings[Keys.AmountShorthands]; }
-            set { IsolatedStorageSettings.ApplicationSettings[Keys.AmountShorthands] = value; }
+            get { return (ICollection<String>)IsolatedStorageSettings.ApplicationSettings[Keys.AmountShorthands]; }
+            set 
+            { 
+                IsolatedStorageSettings.ApplicationSettings[Keys.AmountShorthands] = value;
+                this.NotifyPropertyChanged("AmountShorthands");
+            }
         }
+
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Used to notify that a property changed
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
     }
 
 
