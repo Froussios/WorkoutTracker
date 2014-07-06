@@ -26,7 +26,7 @@ namespace WorkoutTracker
 
         public SettingsAccessor Settings
         {
-            get { return SettingsAccessor.Default; }
+            get { return (SettingsAccessor) Resources["Settings"]; }
         }
 
 
