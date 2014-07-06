@@ -152,6 +152,14 @@ namespace WorkoutTracker
             return Count.ToString() + " " + Activity.Name;
         }
 
+        public override bool Equals(object obj)
+        {
+            Entry other = obj as Entry;
+            if (other != null)
+                return this.Id == other.Id;
+            return false;
+        }
+
 
         #region INotifyPropertyChanged Members
 
@@ -229,6 +237,18 @@ namespace WorkoutTracker
         public override string ToString()
         {
             return "(" + Id + ") " + Name;
+        }
+
+
+        /// <summary>
+        /// Two activities are equal if they have the same name
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            Activity other = obj as Activity;
+            if (other != null)
+                return this.Name == other.Name;
+            return false;
         }
 
 
