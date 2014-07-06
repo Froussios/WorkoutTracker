@@ -15,43 +15,64 @@
     shell:SystemTray.IsVisible="True">
 
         <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="WORKOUT TRACKER" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="Settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+    <phone:Pivot Title="WORKOUT TRACKER">
+        
+        <phone:PivotItem Header="Settings">
+            <Grid x:Name="LayoutRoot" Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <StackPanel Orientation="Vertical">
-
-                <!--<TextBlock FontSize="28" HorizontalAlignment="Left" Margin="20,0,0,0">Session interval</TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
-                    <TextBox Text="{Binding SessionInterval, Mode=TwoWay, Source={StaticResource Settings}}" InputScope="Number" Width="110"></TextBox>
-                    <TextBlock VerticalAlignment="Center">mins</TextBlock>
+                <!--TitlePanel contains the name of the application and page title-->
+                <!--<StackPanel Grid.Row="0" Margin="12,17,0,28">
+                    <TextBlock Text="WORKOUT TRACKER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock Text="Settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
                 </StackPanel>-->
 
-                <TextBlock FontSize="28" HorizontalAlignment="Left" Margin="20,0,0,0">Amount Shorthands</TextBlock>
-                <ItemsControl x:Name="ShorthandsControl" Margin="40,0,0,0" ItemsSource="{Binding AmountShorthands, Source={StaticResource Settings}}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel></StackPanel>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding Amount, Mode=TwoWay}" TextInput="TextBox_TextInput" IsReadOnly="False"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <!--ContentPanel - place additional content here-->
+                <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                    <StackPanel Orientation="Vertical">
+
+                        <!--<TextBlock FontSize="28" HorizontalAlignment="Left" Margin="20,0,0,0">Session interval</TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
+                        <TextBox Text="{Binding SessionInterval, Mode=TwoWay, Source={StaticResource Settings}}" InputScope="Number" Width="110"></TextBox>
+                        <TextBlock VerticalAlignment="Center">mins</TextBlock>
+                    </StackPanel>-->
+
+                        <TextBlock FontSize="28" HorizontalAlignment="Left" Margin="20,0,0,0">Amount Shorthands</TextBlock>
+                        <ItemsControl x:Name="ShorthandsControl" Margin="40,0,0,0" ItemsSource="{Binding AmountShorthands, Source={StaticResource Settings}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Amount, Mode=TwoWay}" TextInput="TextBox_TextInput" IsReadOnly="False"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </phone:PivotItem>
+
+        <phone:PivotItem Header="Feedback">
+            <StackPanel>
+                <RichTextBox>
+                    <Paragraph>
+                        Thank you for using our app.
+                    </Paragraph>
+                    <Paragraph>
+                        Please report any problems at
+                        <Hyperlink NavigateUri="https://github.com/Froussios/WorkoutTracker/issues?state=open">https://github.com/Froussios/WorkoutTracker/issues?state=open</Hyperlink>
+                    </Paragraph>
+                </RichTextBox>
             </StackPanel>
-        </Grid>
-    </Grid>
+        </phone:PivotItem>
+
+    </phone:Pivot>
 
 </phone:PhoneApplicationPage>
