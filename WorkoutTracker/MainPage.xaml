@@ -178,13 +178,14 @@
             </phone:PivotItem>
 
             <phone:PivotItem Header="Graphs" x:Name="PivotItemGraphs">
-                    <ScrollViewer>
-                        <StackPanel>
-                            <!--<Button Click="Button_Click">Draw Graphs</Button>-->
-                            <StackPanel x:Name="ChartStackPanel">
-                            </StackPanel>
+                <ScrollViewer>
+                    <StackPanel>
+                        <!--<Button Click="Button_Click">Draw Graphs</Button>-->
+                        <TextBlock FontSize="28" HorizontalAlignment="Center">Last month's daily activity</TextBlock>
+                        <StackPanel x:Name="ChartStackPanel">
                         </StackPanel>
-                    </ScrollViewer>
+                    </StackPanel>
+                </ScrollViewer>
             </phone:PivotItem>
 
         </phone:Pivot>
