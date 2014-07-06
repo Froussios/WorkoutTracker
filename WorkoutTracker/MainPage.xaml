@@ -104,7 +104,7 @@
         </Popup>
 
         <!--Pivot Control-->
-        <phone:Pivot Title="WORKOUT TRACKER">
+        <phone:Pivot Title="WORKOUT TRACKER" SelectionChanged="Pivot_SelectionChanged">
 
             <phone:PivotItem Header="New" Margin="10,10,14,18">
                 <Grid>
@@ -177,10 +177,10 @@
                 </StackPanel>
             </phone:PivotItem>
 
-            <phone:PivotItem Header="Graphs" Loaded="PivotItem_Loaded">
+            <phone:PivotItem Header="Graphs" x:Name="PivotItemGraphs">
                     <ScrollViewer>
                         <StackPanel>
-                            <Button Click="Button_Click">Draw Graphs</Button>
+                            <!--<Button Click="Button_Click">Draw Graphs</Button>-->
                             <StackPanel x:Name="ChartStackPanel">
                             </StackPanel>
                         </StackPanel>

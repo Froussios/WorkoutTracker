@@ -137,6 +137,7 @@ namespace WorkoutTracker
         /// <summary>
         /// Calculate and draw graphs for the last month
         /// </summary>
+        [Obsolete]
         private void CreateGraphs()
         {
             ChartStackPanel.Children.Clear();
@@ -255,7 +256,7 @@ namespace WorkoutTracker
                     Title = activity.Name,
                     Data = new ObservableCollection<Datum>(list.Select(x => new Datum(x))),
                     Height=150,
-                    Margin = new Thickness(0, 20, 0, 0),
+                    Margin = new Thickness(0, 30, 0, 0),
                 };
                 ChartStackPanel.Children.Add(statser);
             }
@@ -460,6 +461,18 @@ namespace WorkoutTracker
         }
 
 
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Pivot pivot = sender as Pivot;
+            PivotItem item = pivot.SelectedItem as PivotItem;
+
+            if (item.Equals(this.PivotItemGraphs))
+            {
+                this.createGraphs2();
+            }
+        }
+
+
 
         #region INotifyPropertyChanged
 
@@ -479,6 +492,7 @@ namespace WorkoutTracker
         }
 
         #endregion
+
 
 
         // Sample code for building a localized ApplicationBar
