@@ -233,7 +233,7 @@ namespace WorkoutTracker
             }
         }
 
-        private int _dailyGoal;
+        private int _dailyGoal=0;
         [Column]
         public int DailyGoal
         {
@@ -249,7 +249,7 @@ namespace WorkoutTracker
             }
         }
 
-        private int _weeklyGoal;
+        private int _weeklyGoal=0;
         [Column]
         public int WeeklyGoal
         {
