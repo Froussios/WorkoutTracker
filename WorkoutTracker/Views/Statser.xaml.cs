@@ -120,7 +120,7 @@ namespace WorkoutTracker
         public double Interval
         {
             get { return _interval; }
-            set
+            protected set
             {
                 if (value != Interval)
                 {
@@ -162,7 +162,7 @@ namespace WorkoutTracker
         public ObservableCollection<Tuple<double, double, Brush>> RowGrid
         {
             get { return _rowGrid; }
-            set
+            protected set
             {
                 this._rowGrid = value;
                 this.OnPropertyChanged("RowGrid");
@@ -174,7 +174,7 @@ namespace WorkoutTracker
         public ObservableCollection<Double> ColumnGrid
         {
             get { return _columnGrid; }
-            set
+            protected set
             {
                 this._columnGrid = value;
                 this.OnPropertyChanged("ColumnGrid");
@@ -193,11 +193,15 @@ namespace WorkoutTracker
                 {
                     this._maxValue = value;
                     this.OnPropertyChanged("MaxValue");
+                    this.calculateRowGrid();
                 }
             }
         }
 
 
+        /// <summary>
+        /// New empty statser
+        /// </summary>
         public Statser()
         {
             Data.CollectionChanged += data_CollectionChanged;
@@ -205,25 +209,37 @@ namespace WorkoutTracker
             InitializeComponent();
             this.DataContext = this;
 
-            Data.Add(new Datum() { OriginalValue = 10 });
-            Data.Add(new Datum() { OriginalValue = 15 });
+            //Data.Add(new Datum() { OriginalValue = 10 });
+            //Data.Add(new Datum() { OriginalValue = 15 });
 
             this.SizeChanged += Statser_SizeChanged;
         }
 
 
+        /// <summary>
+        /// The data that are graphed here have changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void data_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             calculateColumnHeights();
-            calculateRowGrid();
+            
+            // Row grid will be updated automatically if the MaxValue has changed
         }
 
         
-
+        /// <summary>
+        /// The UserControl has been resized
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Statser_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             calculateColumnHeights();
-            calculateRowGrid();
+
+            if (e.NewSize.Height != e.PreviousSize.Height)
+                calculateRowGrid();
         }
 
 
@@ -248,6 +264,9 @@ namespace WorkoutTracker
         }
 
 
+        /// <summary>
+        /// Run when the <code>MaxValue</code> changes
+        /// </summary>
         private void calculateRowGrid()
         {
             MaxValue = Data.Max(x => x.OriginalValue);
@@ -268,6 +287,11 @@ namespace WorkoutTracker
         }
 
 
+        /// <summary>
+        /// Select the appropriate snap value and ceil to that value
+        /// </summary>
+        /// <param name="maxValue">The value to ceil</param>
+        /// <returns>The ceiled value</returns>
         protected double CeilToMultiple(double maxValue)
         {
             double select = snapIntervals[0];
@@ -282,6 +306,9 @@ namespace WorkoutTracker
         }
 
 
+        /// <summary>
+        /// Get the smallest multiple of <code>step</code> that is greater than <code>value</code>
+        /// </summary>
         protected static double CeilToMultiple(double value, double step)
         {
             if (value % step == 0)
