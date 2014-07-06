@@ -36,6 +36,8 @@ namespace WorkoutTracker
 
                 Activity awesome = this.GetActivity("Being Awesome");
                 this.AddEntry(new Entry { Count = 1, Activity = awesome, Date = DateTime.Now});
+
+                this.AddActivity(new Activity { Name = "100 meters"});
             }
         }
 
@@ -195,8 +197,8 @@ namespace WorkoutTracker
         {
             this.DataContext.SubmitChanges();
 
-            this.NotifyPropertyChanged("AllEntries");
-            this.NotifyPropertyChanged("AllActivities");
+            //this.NotifyPropertyChanged("AllEntries");
+            //this.NotifyPropertyChanged("AllActivities");
         }
 
 
