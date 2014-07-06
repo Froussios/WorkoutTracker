@@ -161,6 +161,7 @@ namespace WorkoutTracker
             get
             {
                 return EntriesToday.GroupBy(x => x.Activity)
+                                   .OrderBy(group => group.Key.Name)
                                    .Select(group => new Tuple<Activity, int, int>
                                    (
                                        group.Key,
