@@ -40,6 +40,14 @@ namespace WorkoutTracker
         }
 
 
+        private bool _graphsDirty = true;
+        private bool GraphsDirty
+        {
+            get { return this._graphsDirty; }
+            set { this._graphsDirty = value; }
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -50,8 +58,18 @@ namespace WorkoutTracker
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
 
+            App.ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+
+        void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == ViewModel.PropertyNames.EntriesLastMonth)
+                // Mark graphs for redrawing
+                GraphsDirty = true;
         }
 
         
@@ -260,6 +278,8 @@ namespace WorkoutTracker
                 };
                 ChartStackPanel.Children.Add(statser);
             }
+
+            GraphsDirty = false;
         }
 
 
@@ -467,9 +487,8 @@ namespace WorkoutTracker
             PivotItem item = pivot.SelectedItem as PivotItem;
 
             if (item.Equals(this.PivotItemGraphs))
-            {
-                this.createGraphs2();
-            }
+                if (GraphsDirty)
+                    this.createGraphs2();
         }
 
 
