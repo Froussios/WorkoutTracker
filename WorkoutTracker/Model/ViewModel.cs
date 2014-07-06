@@ -40,7 +40,7 @@ namespace WorkoutTracker
         }
 
 
-        private static class PropertyNames
+        public static class PropertyNames
         {
             public static String AllEntries = "AllEntries";
             public static String AllActivities = "AllActivities";
