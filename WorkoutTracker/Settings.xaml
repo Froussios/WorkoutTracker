@@ -31,11 +31,11 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel Orientation="Vertical">
 
-                <TextBlock FontSize="28" HorizontalAlignment="Left" Margin="20,0,0,0">Session interval</TextBlock>
+                <!--<TextBlock FontSize="28" HorizontalAlignment="Left" Margin="20,0,0,0">Session interval</TextBlock>
                 <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
                     <TextBox Text="{Binding SessionInterval, Mode=TwoWay, Source={StaticResource Settings}}" InputScope="Number" Width="110"></TextBox>
                     <TextBlock VerticalAlignment="Center">mins</TextBlock>
-                </StackPanel>
+                </StackPanel>-->
 
                 <TextBlock FontSize="28" HorizontalAlignment="Left" Margin="20,0,0,0">Amount Shorthands</TextBlock>
                 <ItemsControl x:Name="ShorthandsControl" Margin="40,0,0,0" ItemsSource="{Binding AmountShorthands, Source={StaticResource Settings}}">
