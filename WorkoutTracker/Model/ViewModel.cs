@@ -32,12 +32,12 @@ namespace WorkoutTracker
             // Add welcome dummy
             if (this._allActivities.Count == 0)
             {
-                this.AddActivity(new Activity { Name = "Being Awesome"});
+                this.AddActivity(new Activity { Name = "Good decision"});
 
-                Activity awesome = this.GetActivity("Being Awesome");
+                Activity awesome = this.GetActivity("Good decision");
                 this.AddEntry(new Entry { Count = 1, Activity = awesome, Date = DateTime.Now});
 
-                this.AddActivity(new Activity { Name = "100 meters"});
+                this.AddActivity(new Activity { Name = "100s of meters"});
             }
         }
 
