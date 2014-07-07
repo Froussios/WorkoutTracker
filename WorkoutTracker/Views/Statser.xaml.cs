@@ -263,7 +263,9 @@ namespace WorkoutTracker
         /// </summary>
         private void calculateColumnHeights()
         {
-            MaxValue = Data.Max();
+            MaxValue = (Data != null && Data.Count()>0)
+                       ? Data.Max()
+                       : 0;
 
             this.ColumnSetup = new ObservableCollection<Datum>(Data.Select(datum => new Datum(datum)));
 
@@ -289,7 +291,10 @@ namespace WorkoutTracker
         /// </summary>
         private void calculateRowGrid()
         {
-            MaxValue = Data.Max();
+            MaxValue = (Data != null && Data.Count() > 0)
+                       ? Data.Max()
+                       : 0;
+
             int rows = (int) (MaxValue / Interval);
             double height = RowGridContainer.ActualHeight;
             double width = RowGridContainer.ActualWidth;
@@ -300,8 +305,8 @@ namespace WorkoutTracker
                 this.RowGrid.Add(new Tuple<double, double, Brush>(
                     height / rows,
                     width,
-                    (i % 2 == 0) ? new SolidColorBrush(Color.FromArgb(255, 25, 25, 25))
-                                 : new SolidColorBrush(Color.FromArgb(255, 50, 50, 50))
+                    (i % 2 == 0) ? Resources["PhoneBackgroundBrush"] as Brush
+                                 : Resources["PhoneChromeBrush"] as Brush
                 ));
             }
         }
