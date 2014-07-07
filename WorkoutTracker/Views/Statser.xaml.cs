@@ -115,7 +115,7 @@ namespace WorkoutTracker
         }
 
 
-        private double[] snapIntervals = { 5, 20, 50, 100, 1000, 5000, 10000 };
+        private double[] snapIntervals = { 1, 5, 20, 50, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000 };
         private double _interval = 20;
         public double Interval
         {
