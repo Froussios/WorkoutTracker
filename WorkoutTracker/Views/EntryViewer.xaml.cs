@@ -58,7 +58,7 @@ namespace WorkoutTracker
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Delete_Click(object sender, EventArgs e)
         {
             App.ViewModel.DeleteEntry(DataContext as Entry);
             //NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));

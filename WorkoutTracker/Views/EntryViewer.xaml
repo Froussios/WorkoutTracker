@@ -76,7 +76,7 @@
 					<StackPanel.RenderTransform>
 						<CompositeTransform/>
 					</StackPanel.RenderTransform>
-					<TextBlock Text="Date" Style="{StaticResource PhoneTextTitle3Style}" Foreground="{StaticResource PhoneAccentBrush}"/>
+					<TextBlock Text="Date" Style="{StaticResource PhoneTextTitle3Style}"/>
 					<TextBlock Text="{Binding Date}" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"/>
 					<TextBlock Text="Activity type" Style="{StaticResource PhoneTextTitle3Style}"/>
 					<TextBlock Text="{Binding PresentationActivity}" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"/>
@@ -85,7 +85,7 @@
                     <toolkit:DatePicker Value="{Binding Date, Mode=TwoWay}"></toolkit:DatePicker>
 					<TextBlock/>
 
-					<Button Click="Button_Click" Content="Delete! Arghhh"/>
+					<!--<Button Click="Delete_Click" Content="Delete! Arghhh"/>-->
 				</StackPanel>
 			</ScrollViewer>
 		</Grid>
@@ -94,6 +94,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/back.png" Text="Back" Click="ApplicationBarBack_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Delete.png" Text="Back" Click="Delete_Click"/>
             <!--<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/save.png" Text="Save" Click="ApplicationBarSave_Click"/>-->
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
