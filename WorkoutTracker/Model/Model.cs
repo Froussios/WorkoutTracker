@@ -160,6 +160,11 @@ namespace WorkoutTracker
             return false;
         }
 
+        public override int GetHashCode()
+        {
+            return this.Id;
+        }
+
 
         #region INotifyPropertyChanged Members
 
@@ -280,6 +285,11 @@ namespace WorkoutTracker
             if (other != null)
                 return this.Name == other.Name;
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id;
         }
 
 
