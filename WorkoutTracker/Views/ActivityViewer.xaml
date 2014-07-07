@@ -34,10 +34,10 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
 
         <Popup x:Name="Popup">
             <Grid Width="{Binding ActualWidth, ElementName=LayoutRoot, Mode=OneWay}"  Background="{StaticResource PhoneChromeBrush}" >
@@ -49,40 +49,52 @@
         </Popup>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <!--<StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="WORKOUT TRACKER" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock Text="Activity" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+        </StackPanel>-->
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ScrollViewer>
-                <StackPanel>
-                    <TextBlock Text="Activity" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                    <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
-                    <TextBlock Text="Total" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                    <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
-                    <TextBlock Text="Average Set" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                    <TextBlock x:Name="AverageSetTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
+        <phone:Pivot Title="WORKOUT TRACKER">
 
-                    <TextBlock Text="Daily Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                    <TextBox Text="{Binding DailyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
-                    <TextBlock Text="Weekly Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                    <TextBox Text="{Binding WeeklyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
-                    
-                    <Rectangle Height="25"></Rectangle>
+            <phone:PivotItem Header="Activity">
+                <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <TextBlock Text="Activity" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
+                            <TextBlock Text="Total" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
+                            <TextBlock Text="Average Set" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBlock x:Name="AverageSetTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
 
-                    <!--<Button Click="Delete_Click">Delete! Arghhh</Button>
+                            <TextBlock Text="Daily Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBox Text="{Binding DailyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
+                            <TextBlock Text="Weekly Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBox Text="{Binding WeeklyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
+
+                            <Rectangle Height="25"></Rectangle>
+
+                            <!--<Button Click="Delete_Click">Delete! Arghhh</Button>
                     <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap">Note: You can't delete if there are entries to this activity</TextBlock>
                     <TextBlock></TextBlock>-->
-                    <TextBlock Style="{StaticResource PhoneTextTitle3Style}">Entries</TextBlock>
+                            
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </phone:PivotItem>
+            
+            <phone:PivotItem Header="Entries">
+                <StackPanel>
+                    <!--<TextBlock Style="{StaticResource PhoneTextTitle3Style}">Entries</TextBlock>-->
                     <StackPanel>
                         <ItemsControl x:Name="HistoryEntriesList"  ItemTemplate="{StaticResource EntryTemplate}"></ItemsControl>
                     </StackPanel>
                 </StackPanel>
-            </ScrollViewer>
-        </Grid>
-    </Grid>
+            </phone:PivotItem>
+
+        </phone:Pivot>
+
+    </Grid>    
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
