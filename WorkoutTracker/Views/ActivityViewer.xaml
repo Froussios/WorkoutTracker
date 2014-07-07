@@ -62,17 +62,16 @@
                         <StackPanel>
                             <TextBlock Text="Name" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
                             <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="25,0,12,0"/>
-                            <TextBlock Text="Total" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                            <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
-                            <TextBlock Text="Average Set" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                            <TextBlock x:Name="AverageSetTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
 
                             <TextBlock Text="Daily Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
                             <TextBox Text="{Binding DailyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
                             <TextBlock Text="Weekly Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
                             <TextBox Text="{Binding WeeklyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
 
-                            <Rectangle Height="25"></Rectangle>
+                            <TextBlock Text="Total" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
+                            <TextBlock Text="Average Set" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBlock x:Name="AverageSetTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
 
                             <!--<Button Click="Delete_Click">Delete! Arghhh</Button>
                     <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap">Note: You can't delete if there are entries to this activity</TextBlock>
