@@ -146,8 +146,8 @@ namespace WorkoutTracker
         }
 
 
-        private IList<double> _data = new List<double>();
-        public IList<double> Data
+        private IEnumerable<double> _data = new List<double>();
+        public IEnumerable<double> Data
         {
             get { return _data; }
             set
@@ -271,6 +271,8 @@ namespace WorkoutTracker
             {
                 double desiredHeight = (datum.OriginalValue / MaxValue) * ColumnContainer.ActualHeight;
                 double desiredWidth = ColumnContainer.ActualWidth / ColumnSetup.Count;
+
+                desiredWidth *= 0.95;
 
                 // Only update when changing the actual value
                 if (datum.ProjectedValue != desiredHeight)
