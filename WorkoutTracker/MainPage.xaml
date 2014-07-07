@@ -166,7 +166,7 @@
                     <StackPanel>
                         <TextBlock FontSize="28" HorizontalAlignment="Center">Today</TextBlock>
                         <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding EntriesToday}"></ItemsControl>
-                        <TextBlock FontSize="28" HorizontalAlignment="Center" Margin="0,20,0,0">Last Month</TextBlock>
+                        <TextBlock FontSize="28" HorizontalAlignment="Center" Margin="0,20,0,0">This Month</TextBlock>
                         <ItemsControl ItemTemplate="{StaticResource EntryTemplate}" ItemsSource="{Binding EntriesBeforeToday}"></ItemsControl>
                     </StackPanel>
                 </ScrollViewer>

@@ -45,6 +45,7 @@ namespace WorkoutTracker
                     HistoryEntriesList.ItemsSource = entries;
                     TotalTextBlock.Text = entries.Sum(x => x.Count).ToString();
                     AverageSetTextBlock.Text = entries.Average(x => x.Count).ToString();
+                    MaximumSetTextBlock.Text = entries.Max(x => x.Count).ToString();
                 }
 
                 AverageGraph.Data = this.DailyAverages;
