@@ -385,7 +385,7 @@ namespace WorkoutTracker
         /// <param name="e"></param>
         private void ActivityItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            Grid senderGrid = sender as Grid;
+            FrameworkElement senderGrid = sender as FrameworkElement;
             Activity activity = senderGrid.DataContext as Activity;
             if (activity != null)
             {
