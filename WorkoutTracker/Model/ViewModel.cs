@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Diagnostics.Contracts;
+using System.Windows;
 
 namespace WorkoutTracker
 {
@@ -158,17 +159,18 @@ namespace WorkoutTracker
         }
 
 
-        public IEnumerable<Tuple<Activity, int, int>> TotalsToday
+        public IEnumerable<Tuple<Activity, int, int, Visibility>> TotalsToday
         {
             get
             {
                 return EntriesToday.GroupBy(x => x.Activity)
                                    .OrderBy(group => group.Key.Name)
-                                   .Select(group => new Tuple<Activity, int, int>
+                                   .Select(group => new Tuple<Activity, int, int, Visibility>
                                    (
                                        group.Key,
                                        group.Sum(entry => entry.Count),
-                                       group.Count()
+                                       group.Count(),
+                                       (group.Key.DailyGoal > 0) ? Visibility.Visible : Visibility.Collapsed
                                    ));
 
             }

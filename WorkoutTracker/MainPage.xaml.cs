@@ -161,7 +161,7 @@ namespace WorkoutTracker
         /// Calculate and draw graphs for the last month
         /// </summary>
         [Obsolete]
-        private void CreateGraphs()
+        private void CreateGraphsOld()
         {
             ChartStackPanel.Children.Clear();
             ChartStackPanel.Children.Add(new TextBlock() 
@@ -256,7 +256,7 @@ namespace WorkoutTracker
             
         }
 
-        private void createGraphs2()
+        private void createGraphs()
         {
             ChartStackPanel.Children.Clear();
 
@@ -278,7 +278,7 @@ namespace WorkoutTracker
                 {
                     Title = activity.Name,
                     Data = new ObservableCollection<Datum>(list.Select(x => new Datum(x))),
-                    Height=150,
+                    Height = 150,
                     Margin = new Thickness(0, 30, 0, 0),
                 };
                 ChartStackPanel.Children.Add(statser);
@@ -438,7 +438,7 @@ namespace WorkoutTracker
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            createGraphs2();
+            createGraphs();
         }
 
 
@@ -493,7 +493,7 @@ namespace WorkoutTracker
 
             if (item.Equals(this.PivotItemGraphs))
                 if (GraphsDirty)
-                    this.createGraphs2();
+                    this.createGraphs();
         }
 
 
