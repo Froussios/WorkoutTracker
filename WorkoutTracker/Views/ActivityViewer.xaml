@@ -58,30 +58,11 @@
 
         <phone:Pivot Title="WORKOUT TRACKER">
 
-            <phone:PivotItem Header="Activity">
-                <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-                    <ScrollViewer>
-                        <StackPanel>
-                            <TextBlock Text="Name" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                            <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="25,0,12,0"/>
-
-                            <TextBlock Text="Daily Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                            <TextBox Text="{Binding DailyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
-                            <TextBlock Text="Weekly Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
-                            <TextBox Text="{Binding WeeklyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
-
-                            <!--<Button Click="Delete_Click">Delete! Arghhh</Button>
-                    <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap">Note: You can't delete if there are entries to this activity</TextBlock>
-                    <TextBlock></TextBlock>-->
-                            
-                        </StackPanel>
-                    </ScrollViewer>
-                </Grid>
-            </phone:PivotItem>
-
             <phone:PivotItem Header="Stats">
                 <ScrollViewer>
                     <StackPanel>
+                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" FontSize="28"/>
+                        
                         <TextBlock Text="Total" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
                         <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
                         <wt:Statser x:Name="TotalGraph" Title="Last Month" Height="150"/>
@@ -99,6 +80,22 @@
                         <wt:Statser x:Name="MaximumGraph" Title="Last Month" Height="150"/>
                     </StackPanel>
                 </ScrollViewer>
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="Activity">
+                <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <TextBlock Text="Name" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="25,0,12,0"/>
+
+                            <TextBlock Text="Daily Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBox Text="{Binding DailyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
+                            <TextBlock Text="Weekly Goal" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
+                            <TextBox Text="{Binding WeeklyGoal, Mode=TwoWay}" Margin="25,0,12,0" Width="200" HorizontalAlignment="Left" InputScope="Number"></TextBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
             </phone:PivotItem>
 
             <phone:PivotItem Header="Entries">
