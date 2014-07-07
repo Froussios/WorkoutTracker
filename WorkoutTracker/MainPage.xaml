@@ -41,9 +41,13 @@
         </DataTemplate>
         
         <DataTemplate x:Key="ActivityTemplate">
-            <Grid Tap="ActivityItem_Tap" Margin="30,10,30,10">
-                <TextBlock Text="{Binding Name}"></TextBlock>
-            </Grid>
+            <StackPanel Tap="ActivityItem_Tap" Margin="30,10,30,10">
+                <TextBlock Text="{Binding Name}" FontSize="28"/>
+                <TextBlock Margin="30,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}">
+                    <Run Text="Daily goal: "/>
+                    <Run Text="{Binding DailyGoal}" Foreground="{StaticResource PhoneAccentBrush}" />
+                </TextBlock>
+            </StackPanel>
         </DataTemplate>
         
         <DataTemplate x:Key="ActivitySelectorTemplate">
