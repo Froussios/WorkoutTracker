@@ -38,7 +38,7 @@
         <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="100" x:Name="RowGridContainer" ItemTemplate="{StaticResource RowLine}" ItemsSource="{Binding RowGrid}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" />
+                    <StackPanel Orientation="Vertical"  Background="{StaticResource PhoneBackgroundBrush}"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
