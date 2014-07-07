@@ -146,14 +146,31 @@ namespace WorkoutTracker
         }
 
 
-        private ObservableCollection<Datum> _data = new ObservableCollection<Datum>();
-        public ObservableCollection<Datum> Data
+        private IList<double> _data = new List<double>();
+        public IList<double> Data
         {
             get { return _data; }
             set
             {
+                if (value == null)
+                    throw new ArgumentNullException("Data list cannot be null.");
+
                 this._data = value;
                 this.OnPropertyChanged("Data");
+
+                this.redraw();
+            }
+        }
+
+
+        private ObservableCollection<Datum> _columnSetup = new ObservableCollection<Datum>();
+        public ObservableCollection<Datum> ColumnSetup
+        {
+            get { return _columnSetup; }
+            set
+            {
+                _columnSetup = value;
+                this.OnPropertyChanged("ColumnSetup");
             }
         }
 
@@ -204,8 +221,6 @@ namespace WorkoutTracker
         /// </summary>
         public Statser()
         {
-            Data.CollectionChanged += data_CollectionChanged;
-
             InitializeComponent();
             this.DataContext = this;
 
@@ -248,11 +263,14 @@ namespace WorkoutTracker
         /// </summary>
         private void calculateColumnHeights()
         {
-            MaxValue = Data.Max(x => x.OriginalValue);
-            foreach (Datum datum in Data)
+            MaxValue = Data.Max();
+
+            this.ColumnSetup = new ObservableCollection<Datum>(Data.Select(datum => new Datum(datum)));
+
+            foreach (Datum datum in ColumnSetup)
             {
                 double desiredHeight = (datum.OriginalValue / MaxValue) * ColumnContainer.ActualHeight;
-                double desiredWidth = ColumnContainer.ActualWidth / Data.Count;
+                double desiredWidth = ColumnContainer.ActualWidth / ColumnSetup.Count;
 
                 // Only update when changing the actual value
                 if (datum.ProjectedValue != desiredHeight)
@@ -269,7 +287,7 @@ namespace WorkoutTracker
         /// </summary>
         private void calculateRowGrid()
         {
-            MaxValue = Data.Max(x => x.OriginalValue);
+            MaxValue = Data.Max();
             int rows = (int) (MaxValue / Interval);
             double height = RowGridContainer.ActualHeight;
             double width = RowGridContainer.ActualWidth;
@@ -284,6 +302,16 @@ namespace WorkoutTracker
                                  : new SolidColorBrush(Color.FromArgb(255, 50, 50, 50))
                 ));
             }
+        }
+
+
+        /// <summary>
+        /// Recalculates everything from the provided data list
+        /// </summary>
+        private void redraw()
+        {
+            calculateColumnHeights();
+            calculateRowGrid();
         }
 
 

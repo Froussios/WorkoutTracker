@@ -43,7 +43,7 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <ItemsControl Grid.Row="1" Grid.Column="1" x:Name="ColumnContainer" ItemTemplate="{StaticResource ColumnTemplate}" ItemsSource="{Binding Data}" >
+        <ItemsControl Grid.Row="1" Grid.Column="1" x:Name="ColumnContainer" ItemTemplate="{StaticResource ColumnTemplate}" ItemsSource="{Binding ColumnSetup}" >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />

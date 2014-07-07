@@ -277,7 +277,7 @@ namespace WorkoutTracker
                 Statser statser = new Statser()
                 {
                     Title = activity.Name,
-                    Data = new ObservableCollection<Datum>(list.Select(x => new Datum(x))),
+                    Data = list,
                     Height = 150,
                     Margin = new Thickness(0, 30, 0, 0),
                 };
