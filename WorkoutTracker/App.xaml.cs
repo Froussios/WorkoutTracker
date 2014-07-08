@@ -10,6 +10,8 @@ using WorkoutTracker.Resources;
 
 using System.Windows.Media;
 using System.IO.IsolatedStorage;
+using BugSense;
+using BugSense.Core.Model;
 
 namespace WorkoutTracker
 {
@@ -75,6 +77,9 @@ namespace WorkoutTracker
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+
+            BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(Current), RootFrame, "3cfd33d1");
+            //BugSenseHandler.Instance.InitAndStartSession(this, "3cfd33d1");
 
             InitialiseTheme();
         }
