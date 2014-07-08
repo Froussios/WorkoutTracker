@@ -177,8 +177,12 @@
             </phone:PivotItem>
 
             <phone:PivotItem Header="Activities">
-                <StackPanel>
-                    <Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="100"/>
@@ -186,13 +190,13 @@
                         <TextBox x:Name="NewActivityNameTextBox"  Grid.Column="0" ></TextBox>
                         <Button x:Name="AddNewActivityButton" Grid.Column="1" Click="AddNewActivityButton_Click" >Add</Button>
                     </Grid>
-                    <ScrollViewer>
+                    <ScrollViewer Grid.Row="1">
                         <StackPanel>
                             <!--<TextBlock Text="{Binding AllActivities[0].Count.ToString}"/>-->
                             <ItemsControl x:Name="ActivitiesList" ItemTemplate="{StaticResource ActivityTemplate}" ItemsSource="{Binding AllActivities}"></ItemsControl>
                         </StackPanel>
                     </ScrollViewer>
-                </StackPanel>
+                </Grid>
             </phone:PivotItem>
 
             <phone:PivotItem Header="Graphs" x:Name="PivotItemGraphs">
