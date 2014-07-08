@@ -33,13 +33,34 @@ namespace WorkoutTracker
             // Add welcome dummy
             if (this._allActivities.Count == 0)
             {
-                this.AddActivity(new Activity { Name = "Good decisions"});
+                this.AddActivity(new Activity { Name = "Good decisions" });
 
                 Activity awesome = this.GetActivity("Good decisions");
-                this.AddEntry(new Entry { Count = 1, Activity = awesome, Date = DateTime.Now});
+                this.AddEntry(new Entry { Count = 1, Activity = awesome, Date = DateTime.Now });
 
-                this.AddActivity(new Activity { Name = "100s of meters"});
+                this.AddActivity(new Activity { Name = "100s of meters" });
             }
+
+            // Add show data
+            //{
+            //    Activity pushups = new Activity { Name = "Pushups" };
+            //    Activity situps = new Activity { Name = "Situps" };
+
+            //    this.AddActivity(pushups);
+            //    this.AddActivity(situps);
+
+            //    Queue<int> ps = new Queue<int>(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 40, 50, 60, 80, 100, 100, 0, 0, 0, 80, 0, 90, 75, 70, 65, 62, 60 });
+            //    Queue<int> ss = new Queue<int>(new int[] { 50, 55, 55, 55, 0, 0, 0, 60, 60 ,60 ,60, 60, 55, 55, 60 ,55, 60, 0, 0, 0, 0, 70, 70, 65, 70, 70, 70 });
+
+            //    DateTime day = DateTime.Now.Date.AddMonths(-1);
+            //    while (day.Ticks < DateTime.Now.Ticks)
+            //    {
+            //        this.AddEntry(new Entry { Count = (ps.Count > 0) ? ps.Dequeue() : 0, Activity = pushups, Date = day });
+            //        this.AddEntry(new Entry { Count = (ss.Count > 0) ? ss.Dequeue() : 0, Activity = situps, Date = day });
+
+            //        day = day.AddDays(1);
+            //    }
+            //}
         }
 
 
@@ -270,6 +291,10 @@ namespace WorkoutTracker
         /// <param name="inEntry">The new entry</param>
         public void AddEntry(Entry inEntry)
         {
+            if (inEntry.Count <= 0)
+                // No spam
+                return;
+
             this.DataContext.Entries.InsertOnSubmit(inEntry);
             this.DataContext.SubmitChanges();
             this.LoadEntries();
