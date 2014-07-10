@@ -409,7 +409,7 @@ namespace WorkoutTracker
             //Contract.Requires<ArgumentNullException>(inActivity != null);
 
             // Insert if category doesn't already exist
-            if (AllActivities.Any(activity => activity.Equals(inActivity)))
+            if (!AllActivities.Any(activity => activity.Equals(inActivity)))
             {
                 this.DataContext.Activities.InsertOnSubmit(inActivity);
                 this.DataContext.SubmitChanges();
