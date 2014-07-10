@@ -33,34 +33,40 @@ namespace WorkoutTracker
             // Add welcome dummy
             if (this._allActivities.Count == 0)
             {
-                this.AddActivity(new Activity { Name = "Good decisions" });
+                this.AddActivity(new Activity { Name = "Good decisions", DailyGoal = 1 });
 
                 Activity awesome = this.GetActivity("Good decisions");
                 this.AddEntry(new Entry { Count = 1, Activity = awesome, Date = DateTime.Now });
 
                 this.AddActivity(new Activity { Name = "100s of meters" });
+
+
+                //// Add show data
+                //{
+                //    Activity pushups = new Activity { Name = "Pushups", DailyGoal = 100 };
+                //    Activity situps = new Activity { Name = "Situps", DailyGoal = 100 };
+
+                //    this.AddActivity(pushups);
+                //    this.AddActivity(situps);
+
+                //    Queue<int> ps = new Queue<int>(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 40, 50, 60, 80, 100, 100, 0, 0, 0, 80, 0, 90, 75, 70, 65, 62, 60 });
+                //    Queue<int> ss = new Queue<int>(new int[] { 50, 55, 55, 55, 0, 0, 0, 60, 60, 60, 60, 60, 55, 55, 60, 55, 60, 0, 0, 0, 0, 70, 70, 65, 70, 70, 70 });
+
+                //    DateTime day = DateTime.Now.Date.AddMonths(-1);
+                //    while (day.Ticks < DateTime.Now.Ticks)
+                //    {
+                //        this.AddEntry(new Entry { Count = (ps.Count > 0) ? ps.Dequeue() : 0, Activity = pushups, Date = day });
+                //        this.AddEntry(new Entry { Count = (ss.Count > 0) ? ss.Dequeue() : 0, Activity = situps, Date = day });
+
+                //        day = day.AddDays(1);
+                //    }
+
+                //    this.AddEntry(new Entry { Count = 40, Activity = pushups, Date = day });
+                //    this.AddEntry(new Entry { Count = 30, Activity = pushups, Date = day });
+                //    this.AddEntry(new Entry { Count = 30, Activity = pushups, Date = day });
+                //}
+
             }
-
-            // Add show data
-            //{
-            //    Activity pushups = new Activity { Name = "Pushups" };
-            //    Activity situps = new Activity { Name = "Situps" };
-
-            //    this.AddActivity(pushups);
-            //    this.AddActivity(situps);
-
-            //    Queue<int> ps = new Queue<int>(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 40, 50, 60, 80, 100, 100, 0, 0, 0, 80, 0, 90, 75, 70, 65, 62, 60 });
-            //    Queue<int> ss = new Queue<int>(new int[] { 50, 55, 55, 55, 0, 0, 0, 60, 60 ,60 ,60, 60, 55, 55, 60 ,55, 60, 0, 0, 0, 0, 70, 70, 65, 70, 70, 70 });
-
-            //    DateTime day = DateTime.Now.Date.AddMonths(-1);
-            //    while (day.Ticks < DateTime.Now.Ticks)
-            //    {
-            //        this.AddEntry(new Entry { Count = (ps.Count > 0) ? ps.Dequeue() : 0, Activity = pushups, Date = day });
-            //        this.AddEntry(new Entry { Count = (ss.Count > 0) ? ss.Dequeue() : 0, Activity = situps, Date = day });
-
-            //        day = day.AddDays(1);
-            //    }
-            //}
         }
 
 
@@ -72,7 +78,7 @@ namespace WorkoutTracker
             public static String EntriesToday = "EntriesToday";
             public static String EntriesBeforeToday = "EntriesBeforeToday";
             public static String TotalsToday = "TotalsToday";
-            
+
         }
         private Dictionary<String, ICollection<String>> viewAliases = new Dictionary<string, ICollection<String>>() 
         {
@@ -144,9 +150,9 @@ namespace WorkoutTracker
         /// </summary>
         public IEnumerable<Entry> EntriesLastMonth
         {
-            get 
+            get
             {
-                DateTime lastMonth = DateTime.Now.Date.Subtract(new TimeSpan(30, 0, 0 ,0));
+                DateTime lastMonth = DateTime.Now.Date.Subtract(new TimeSpan(30, 0, 0, 0));
                 return AllEntries.Where(entry => entry.Date.Ticks >= lastMonth.Ticks);
             }
         }
@@ -184,6 +190,16 @@ namespace WorkoutTracker
         {
             get
             {
+                // Create dummies for every activity
+                IEnumerable<Tuple<Activity, int, int, Visibility>> dummies =
+                    AllActivities.Select(activity => new Tuple<Activity, int, int, Visibility>
+                    (
+                        activity,
+                        0,
+                        0,
+                        (activity.DailyGoal > 0) ? Visibility.Visible : Visibility.Collapsed
+                    ));
+
                 return EntriesToday.GroupBy(x => x.Activity)
                                    .OrderBy(group => group.Key.Name)
                                    .Select(group => new Tuple<Activity, int, int, Visibility>
@@ -192,7 +208,8 @@ namespace WorkoutTracker
                                        group.Sum(entry => entry.Count),
                                        group.Count(),
                                        (group.Key.DailyGoal > 0) ? Visibility.Visible : Visibility.Collapsed
-                                   ));
+                                   ))
+                                   .Union(dummies, new TotalsTodayComparer());
 
             }
         }
@@ -243,7 +260,7 @@ namespace WorkoutTracker
         public void LoadActivities()
         {
             var activitiesInDB = from Activity entry in this.DataContext.Activities
-                                select entry;
+                                 select entry;
             AllActivities = new ObservableCollection<Activity>(activitiesInDB);
         }
 
@@ -256,8 +273,8 @@ namespace WorkoutTracker
         public IEnumerable<Entry> GetEntries(String activityName)
         {
             return from Entry entry in this.AllEntries
-                           where entry.Activity.Name == activityName
-                           select entry;
+                   where entry.Activity.Name == activityName
+                   select entry;
         }
 
 
@@ -438,7 +455,7 @@ namespace WorkoutTracker
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                
+
                 if (this.viewAliases.ContainsKey(propertyName))
                     foreach (String propertyAlias in this.viewAliases[propertyName])
                     {
@@ -447,6 +464,28 @@ namespace WorkoutTracker
             }
         }
 
+
+        #endregion
+
+
+        #region IEqualityComparer<Tuple<Activity,int,int,Visibility>>
+
+        private class TotalsTodayComparer : IEqualityComparer<Tuple<Activity, int, int, Visibility>>
+        {
+
+
+            public bool Equals(Tuple<Activity, int, int, Visibility> x, Tuple<Activity, int, int, Visibility> y)
+            {
+                return x.Item1.Equals(y.Item1);
+            }
+
+            public int GetHashCode(Tuple<Activity, int, int, Visibility> obj)
+            {
+                return obj.Item1.Id;
+            }
+
+
+        }
 
         #endregion
     }
