@@ -249,8 +249,8 @@ namespace WorkoutTracker
         {
             var entriesInDB = from Entry entry in this.DataContext.Entries
                               select entry;
-            AllEntries = new ObservableCollection<Entry>(entriesInDB);
-            AllEntries = new ObservableCollection<Entry>(AllEntries.OrderByDescending(x => x.Date));
+            List<Entry> tEntries = new List<Entry>(entriesInDB);
+            AllEntries = new ObservableCollection<Entry>(tEntries.OrderByDescending(x => x.Date));
         }
 
 
