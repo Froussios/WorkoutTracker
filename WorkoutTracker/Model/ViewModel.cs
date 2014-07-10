@@ -385,17 +385,13 @@ namespace WorkoutTracker
         {
             //Contract.Requires<ArgumentNullException>(name != null);
 
-            var activities = from Activity activity in AllActivities
-                             where activity.Name == name
-                             select activity;
-
-            if (activities.Count() == 0)
+            if (!AllActivities.Any(activity => activity.Name == name))
             {
                 this.AddActivity(new Activity { Name = name });
                 return GetActivity(name);
             }
             else
-                return activities.First();
+                return AllActivities.First(activity => activity.Name == name);
         }
 
 
