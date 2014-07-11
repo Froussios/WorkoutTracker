@@ -56,12 +56,12 @@
             <TextBlock Text="Activity" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>-->
 
-        <phone:Pivot Title="WORKOUT TRACKER">
+        <phone:Pivot Title="{Binding Name}">
 
             <phone:PivotItem Header="Stats">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" FontSize="28"/>
+                        <TextBlock HorizontalAlignment="Center" FontSize="28"/>
                         
                         <TextBlock Text="Total" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
                         <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
