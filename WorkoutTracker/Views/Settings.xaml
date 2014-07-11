@@ -59,7 +59,7 @@
             </Grid>
         </phone:PivotItem>
 
-        <phone:PivotItem Header="Feedback">
+        <!--<phone:PivotItem Header="Feedback">
             <StackPanel>
                 <RichTextBox>
                     <Paragraph>
@@ -71,7 +71,7 @@
                     </Paragraph>
                 </RichTextBox>
             </StackPanel>
-        </phone:PivotItem>
+        </phone:PivotItem>-->
 
     </phone:Pivot>
 
