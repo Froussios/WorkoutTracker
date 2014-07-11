@@ -61,7 +61,7 @@
             <phone:PivotItem Header="Stats">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock HorizontalAlignment="Center" FontSize="28"/>
+                        <Rectangle Height="25"></Rectangle>
                         
                         <TextBlock Text="Total" Style="{StaticResource PhoneTextTitle3Style}"></TextBlock>
                         <TextBlock x:Name="TotalTextBlock" Style="{StaticResource PhoneTextSubtleStyle}" Margin="25,0,12,0"></TextBlock>
