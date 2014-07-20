@@ -113,7 +113,7 @@
         </Popup>
 
         <!--Pivot Control-->
-        <phone:Pivot Title="WORKOUT TRACKER" SelectionChanged="Pivot_SelectionChanged">
+        <phone:Pivot Title="{StaticResource AppTitle}" SelectionChanged="Pivot_SelectionChanged">
 
             <phone:PivotItem Header="New" Margin="10,10,14,18">
                 <Grid>

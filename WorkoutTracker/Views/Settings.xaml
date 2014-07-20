@@ -16,7 +16,7 @@
 
         <!--LayoutRoot is the root grid where all page content is placed-->
 
-    <phone:Pivot Title="WORKOUT TRACKER">
+    <phone:Pivot Title="{StaticResource AppTitle}">
         
         <phone:PivotItem Header="Settings">
             <Grid x:Name="LayoutRoot" Background="Transparent">
