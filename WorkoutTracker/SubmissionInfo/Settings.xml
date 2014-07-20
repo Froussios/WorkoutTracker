@@ -1,6 +1,5 @@
 <MarketplaceDetails>
-  <SmallAppTile>
-  </SmallAppTile>
+  <SmallAppTile>Icon-SolidOrange_300.png</SmallAppTile>
   <ScreenShots>wp_ss_20140711_0001.png;wp_ss_20140720_0001.png;wp_ss_20140720_0002.png;wp_ss_20140720_0003.png;;;;;</ScreenShots>
   <ScreenShotsWXGA>;;;;;;;;</ScreenShotsWXGA>
   <ScreenShots720P>;;;;;;;;</ScreenShots720P>
