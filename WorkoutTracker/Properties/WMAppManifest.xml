@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{911961f3-3c5b-4928-a57a-ec04079183a1}" Title="WorkoutTracker" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WorkoutTracker author" Description="Sample description" Publisher="WorkoutTracker" PublisherID="{65e0f9d1-1c6f-4d47-8e7d-95c78b047aa7}">
+  <App xmlns="" ProductID="{911961f3-3c5b-4928-a57a-ec04079183a1}" Title="Workout Diary" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WorkoutTracker author" Description="Sample description" Publisher="WorkoutTracker" PublisherID="{65e0f9d1-1c6f-4d47-8e7d-95c78b047aa7}">
     <IconPath IsRelative="true" IsResource="false">Icon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -19,7 +19,7 @@
           <SmallImageURI IsRelative="true" IsResource="false">Icon.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Icon.png</BackgroundImageURI>
-          <Title>Workout Tracker</Title>
+          <Title>Workout Diary</Title>
           <BackContent>
           </BackContent>
           <BackBackgroundImageURI>
